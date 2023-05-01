@@ -1,38 +1,121 @@
-.App {
-  text-align: center;
+// reset page and elements
+* {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+// Global styling
+a {
+  text-decoration: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
-.App-link {
-  color: #61dafb;
+::-webkit-scrollbar-thumb {
+  // background-color: $mercury;
+  border-radius: 8px;
+  height: 8px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+// ::-webkit-scrollbar-thumb:hover {
+//   background-color: $silver;
+// }
+
+// Colors
+$strava-orange: #fc5200;
+$strava-grey: #f7f7fa;
+$white: #ffffff;
+$black: #000000;
+
+// Fonts
+@font-face {
+  font-family: 'Avenir Regular';
+  src: url(../src/assets/fonts/AvenirNextLTPro-Regular.otf) format('opentype');
+  src: url(../src/assets/fonts/AvenirNextLTPro.ttf) format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir Bold';
+  src: url(../src/assets/fonts/AvenirNextLTPro-Bold.otf) format('opentype');
+  src: url(../src/assets/fonts/AvenirNextLTProBold.ttf) format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+// @Mixins
+
+// font styles
+@mixin font-header {
+    font-size: 24px;
+    line-height: 32px;
+    font-family: 'Avenir Bold';
+    font-weight: 700;
+    color: $black;
+
+    @include tablet {
+        font-size: 33px;
+        line-height: 44px;
+    }
+}
+
+@mixin font-section-header {
+    font-size: 12px;
+    line-height: 20px;
+    font-family: 'Avenir Regular';
+    font-weight: 700;
+    color: $black;
+
+    @include tablet {
+        font-size: 12px;
+        line-height: 20px;
+    }
+}
+
+@mixin font-subheader {
+    font-size: 13px;
+    line-height: 18px;
+    font-family: 'Avenir Regular';
+    font-weight: 700;
+    color: $black;
+
+    @include tablet {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}
+
+@mixin font-body {
+    font-size: 13px;
+    line-height: 18px;
+    font-family: 'Avenir Regular';
+    font-weight: 400;
+    color: $black;
+
+    @include tablet {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}
+
+@mixin font-label {
+    font-size: 10px;
+    line-height: 20px;
+    font-family: 'Avenir Regular';
+    font-weight: 700;
+    color: $white;
+
+    @include tablet {
+        font-size: 12px;
+        line-height: 20px;
+    }
 }

@@ -1,0 +1,55 @@
+@use '../../App.scss' as *;
+
+.header-container {
+    background-color: $white;
+    padding: 0rem 1rem 1rem 1rem; 
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    max-width: 80rem;
+    margin: 0 auto 0 auto;
+
+    &__left {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    &__logo {
+        height: 3.5rem;
+        width: 7.5rem;
+    }
+
+    &__right {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: baseline;
+    }
+
+    &__avatar {
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: $strava-grey;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    &__logout-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    &__logout-icon {
+        width: 2rem;
+        height: 2rem;
+        margin-left: 1rem;
+        fill: $strava-orange;
+    }
+}
