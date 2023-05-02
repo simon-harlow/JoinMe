@@ -29,8 +29,10 @@ a {
 // }
 
 // Colors
+$strava-light-orange: #f7cdb9;
 $strava-orange: #fc5200;
-$strava-grey: #f7f7fa;
+$strava-dark-orange: #ae5023;
+$strava-grey: #eeeeee;
 $white: #ffffff;
 $black: #000000;
 
@@ -50,7 +52,6 @@ $black: #000000;
   font-weight: 700;
   font-style: normal;
 }
-
 
 // @Mixins
 
@@ -118,4 +119,17 @@ $black: #000000;
         font-size: 12px;
         line-height: 20px;
     }
+}
+
+// App.jsx styling to force menu to left and rest of components to right
+.app-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+
+  .content-container {
+      width: 85%;
+      padding: 1rem;
+      margin-left: 15%;
+  }
 }
