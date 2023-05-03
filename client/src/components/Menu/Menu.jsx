@@ -1,33 +1,47 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-import './Menu.scss'
-import JoinMeWhite from '../../assets/icons/web/joinme_logo_white.svg'
-import Run from '../../assets/icons/activity/run.svg'
-import Calendar from '../../assets/icons/web/calendar.svg'
-import Profile from '../../assets/icons/web/profile.svg'
-import Logout from '../../assets/icons/web/logout.svg'
+import "./Menu.scss";
+import JoinMeWhite from "../../assets/icons/web/joinme_logo_white.svg";
+import Run from "../../assets/icons/activity/run.svg";
+import Calendar from "../../assets/icons/web/calendar.svg";
+import Profile from "../../assets/icons/web/profile.svg";
+import Logout from "../../assets/icons/web/logout.svg";
 
-const Menu = () => {
+const Menu = ({ userData }) => {
+
+	console.log(userData);
+
 	return (
 		<nav className="menu">
 			<header className="menu__header">
-				<NavLink to="/" className="menu__link" >
-				<img className="menu__header-run" src={Run} alt="brainflix logo"/>
-				<img className="menu__header-logo" src={JoinMeWhite} alt="brainflix logo"/>
-				</NavLink>
+				<img
+					className="menu__header-run"
+					src={Run}
+					alt="joinme logo running man"
+				/>
+				<img
+					className="menu__header-logo"
+					src={JoinMeWhite}
+					alt="joinme logo text"
+				/>
 			</header>
 			<div className="menu__links">
-				<NavLink to="events" className="menu__link" >
-					<img className="menu__icon" src={Calendar} to your icon alt="icon" />
+				<NavLink to="/events" className="menu__link">
+					<img className="menu__icon" src={Calendar} alt="icon" />
 					<span className="menu__text">Events</span>
 				</NavLink>
-				<NavLink to="/users/:userId" className="menu__link" >
-					<img className="menu__icon" src={Profile} to your icon alt="icon" />
-					<span className="menu__text">My Profile</span>
-				</NavLink>
-				<NavLink to="/login" className="menu__link" >
-					<img className="menu__icon" src={Logout} to your icon alt="icon" />
+				{userData && (
+					<NavLink
+						to={`/users/${userData?.id}`}
+						className="menu__link"
+					>
+						<img className="menu__icon" src={Profile} alt="icon" />
+						<span className="menu__text">My Profile</span>
+					</NavLink>
+				)}
+				<NavLink to="/login" className="menu__link">
+					<img className="menu__icon" src={Logout} alt="icon" />
 					<span className="menu__text">Logout</span>
 				</NavLink>
 			</div>

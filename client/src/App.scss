@@ -31,7 +31,7 @@ a {
 // Colors
 $strava-light-orange: #f7cdb9;
 $strava-orange: #fc5200;
-$strava-dark-orange: #ae5023;
+$strava-dark-orange: #ee4b00;
 $strava-grey: #eeeeee;
 $white: #ffffff;
 $black: #000000;
@@ -57,16 +57,11 @@ $black: #000000;
 
 // font styles
 @mixin font-header {
-    font-size: 24px;
-    line-height: 32px;
+    font-size: 33px;
+    line-height: 44px;
     font-family: 'Avenir Bold';
     font-weight: 700;
     color: $black;
-
-    @include tablet {
-        font-size: 33px;
-        line-height: 44px;
-    }
 }
 
 @mixin font-section-header {
@@ -75,50 +70,30 @@ $black: #000000;
     font-family: 'Avenir Regular';
     font-weight: 700;
     color: $black;
-
-    @include tablet {
-        font-size: 12px;
-        line-height: 20px;
-    }
 }
 
 @mixin font-subheader {
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 22px;
     font-family: 'Avenir Regular';
     font-weight: 700;
     color: $black;
-
-    @include tablet {
-        font-size: 14px;
-        line-height: 22px;
-    }
 }
 
 @mixin font-body {
-    font-size: 13px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 22px;
     font-family: 'Avenir Regular';
     font-weight: 400;
     color: $black;
-
-    @include tablet {
-        font-size: 14px;
-        line-height: 22px;
-    }
 }
 
 @mixin font-label {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 20px;
     font-family: 'Avenir Regular';
     font-weight: 700;
     color: $white;
-
-    @include tablet {
-        font-size: 12px;
-        line-height: 20px;
-    }
 }
 
 // App.jsx styling to force menu to left and rest of components to right

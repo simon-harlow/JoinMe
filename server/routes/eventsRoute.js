@@ -13,6 +13,10 @@ router
     .put(eventsController.updateEvent)
     .delete(eventsController.deleteEvent);
 
+    router
+    .route('/users/:userId')
+    .get(eventsController.allEventsByUser)
+
 router
     .route('/:id/users')
     .get(eventsController.eventUsers)
