@@ -8,7 +8,11 @@ module.exports = [
         state: "BC",
         country: "Canada",
         strava_id: 7159950,
-        strava_url: "https://www.strava.com/athletes/7159950"
+        strava_url: "https://www.strava.com/athletes/7159950",
+        fav_activity_1: "Running",
+        fav_activity_2: "Downhill Skiing",
+        fav_activity_3: "Hiking",
+        bio: "Feel free to join me on a run in Squamish or a ski at Whistler!"
     },
     {
         id: "f12afe76-8d17-460a-9311-1bd594446db2",
@@ -19,7 +23,11 @@ module.exports = [
         state: "BC",
         country: "Canada",
         strava_id: 17753466,
-        strava_url: "https://www.strava.com/athletes/17753466"
+        strava_url: "https://www.strava.com/athletes/17753466",
+        fav_activity_1: "Running",
+        fav_activity_2: "Downhill Skiing",
+        fav_activity_3: "Cycling",
+        bio: "I like anything in the mountains, so lets go!!!"
     },
     {
         id: "2418c1d1-3c94-4ca1-a48b-6661612e8c06",
@@ -31,6 +39,10 @@ module.exports = [
         country: "Canada",
         strava_id: 27060692,
         strava_url: "https://www.strava.com/athletes/27060692",
+        fav_activity_1: "Running",
+        fav_activity_2: "Nordic Skiing",
+        fav_activity_3: "Cycling",
+        bio: "Living in East Vancouver but always up for a Nordic on Cypress, hit me up if you wanna join"
     },
     {
         id: "0ee12bff-6b36-4656-9260-66b4d89f336a",
@@ -41,7 +53,11 @@ module.exports = [
         state: "Wales",
         country: "United Kingdom",
         strava_id: 947399,
-        strava_url: "https://www.strava.com/athletes/947399"
+        strava_url: "https://www.strava.com/athletes/947399",
+        fav_activity_1: "Running",
+        fav_activity_2: "Hiking",
+        fav_activity_3: "Cycling",
+        bio: "Former Salomon sponsored athlete who lives running and cycling, join me if you can keep up!"
     },
     {
         id: "a28128b6-451a-4fa0-bf88-4a85348f3915",
@@ -53,6 +69,10 @@ module.exports = [
         country: "Canada",
         strava_id: 2513942,
         strava_url: "https://www.strava.com/athletes/2513942",
+        fav_activity_1: "Running",
+        fav_activity_2: "Downhill Skiing",
+        fav_activity_3: "Hiking",
+        bio: "North Van YouTuber who loves meeting people and filimng as I go along, check out my channel!"
     },
     {
         id: "fbdfa9be-a28a-4011-a66a-0b8551da9f9f",
@@ -64,6 +84,10 @@ module.exports = [
         country: "United Kingdom",
         strava_id: 1131439,
         strava_url: "https://www.strava.com/athletes/1131439",
+        fav_activity_1: "Running",
+        fav_activity_2: "Hiking",
+        fav_activity_3: "Cycling",
+        bio: "Casual road and trail runner, join me so I'm not on my own!"
     },
     {
         id: "e12fb7d6-c3f9-497e-b649-391fc079d93a",
@@ -75,5 +99,9 @@ module.exports = [
         country: "France",
         strava_id: 1635688,
         strava_url: "https://www.strava.com/pros/1635688",
+        fav_activity_1: "Running",
+        fav_activity_2: "Nordic Skiing",
+        fav_activity_3: "Cycling",
+        bio: "Current #1 Trail Rnner in the world, supported by Hoka. Runnng and trying to Nordic in the Alps. Dream of winning UTMB!"
     }
 ]
