@@ -89,10 +89,12 @@ const allEventsByUser = (req, res) => {
             'events.activity_type', 
             'events.start_location', 
             'events.end_location', 
-            'events.event_duration', 
+            'events.event_duration',
+            'events.event_distance',
             'events.skill_level', 
             'events.gpx_url', 
             'events.repeats', 
+            'events.title',
             'events.description', 
             knex.raw('GROUP_CONCAT(DISTINCT CONCAT(event_users.user_id, ":", user.first_name, " ", user.last_name)) AS users_joined')
         )

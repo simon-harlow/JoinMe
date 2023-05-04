@@ -1,5 +1,6 @@
 @use '../../App.scss' as *;
 
+// styling for the profile card
 .profile {
     display: flex;
     flex-direction: column;
@@ -8,7 +9,7 @@
 
     &__card {
         background-color: #fff;
-        border-radius: 10px;
+        border-radius: 0.5rem;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         display: flex;
         flex-direction: row;
@@ -18,7 +19,7 @@
 
     &__pic {
         padding-right: 3rem;
-        border-right: 2px solid $strava-grey;;
+        border-right: 2px solid $strava-grey;
 
         &-img {
             border-radius: 50%;
@@ -34,18 +35,16 @@
         align-items: flex-start;
         padding-left: 3rem;
         gap: 1rem;
+    }
 
-        &__name {
-            display: flex;
-            justify-content: stretch;
-            align-items: center;
-            padding-bottom: 1rem;
-        }
+    &__name {
+        display: flex;
+        justify-content: stretch;
+        align-items: center;
+    }
 
-        &__name-text {
-            @include font-section-header;
-            margin-bottom: 5rem;
-        }
+    &__name-text {
+        @include font-header;
     }
 
     &__location {
@@ -82,6 +81,103 @@
             &:hover {
                 color: $strava-dark-orange;
             }
+        }
+    }
+}
+
+// styling for the created-events card
+.created-events {
+    &__card {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem;
+    }
+
+    &__title {
+        padding-bottom: 2rem;
+
+        &-text {
+            @include font-section-header;
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    &__icon {
+        padding: 0 3rem 0 1rem;
+    }
+
+    &__event {
+
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 1rem 0 1rem 0;
+        width: 100%;
+        transition: all 0.2s ease-in-out;
+        border-radius: 0.5rem;
+        border: 1px solid $strava-grey;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            transform: translateY(-0.25rem);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        &-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: stretch;
+            padding: 0 1rem 0 3rem;
+            width: 100%;
+        }
+
+        &-header {
+
+            &-title {
+                @include font-subheader;
+                padding-bottom: 0.25rem
+            }
+
+            &-description {
+                @include font-body;
+                padding-bottom: 1rem;
+            }
+        }
+
+        &-info {
+            display: flex;
+            flex-direction: row;
+            gap: 7rem;
+            align-items: baseline;
+        }
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        &-name {
+            @include font-label;
+            color: $strava-orange;
+        }
+
+        &-value {
+            @include font-body;
         }
     }
 }

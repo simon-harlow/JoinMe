@@ -57,15 +57,15 @@ $black: #000000;
 
 // font styles
 @mixin font-header {
-    font-size: 33px;
+    font-size: 26px;
     line-height: 44px;
-    font-family: 'Avenir Bold';
+    font-family: 'Avenir Regular';
     font-weight: 700;
     color: $black;
 }
 
 @mixin font-section-header {
-    font-size: 12px;
+    font-size: 18px;
     line-height: 20px;
     font-family: 'Avenir Regular';
     font-weight: 700;
@@ -73,7 +73,7 @@ $black: #000000;
 }
 
 @mixin font-subheader {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 22px;
     font-family: 'Avenir Regular';
     font-weight: 700;
