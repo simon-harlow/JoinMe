@@ -8,9 +8,11 @@ module.exports = [
         start_location: "Canadian Tire, Squamish",
         end_location: "Canadian Tire, Squamish",
         event_duration: "30 mins",
+        event_distance: 8,
         skill_level: "Intermediate",
         gpx_url: "",
         repeats: "No",
+        title: "From Canadain Tire up to Quest Uni and back",
         description: "Starting at Canadian Tire, run up to Quest University and back along the roads, keeping a pace of around 7:30 min miles"
     },
     {
@@ -22,9 +24,11 @@ module.exports = [
         start_location: "Stanley Park, Vancouver",
         end_location: "Stanley Park, Vancouver",
         event_duration: "45 mins",
+        event_distance: 10,
         skill_level: "Beginner",
         gpx_url: "",
         repeats: "Yes",
+        title: "Stanley Park Seawall",
         description: "Every Wednesday I do a lap around Stanley Park at  slow pace, coe and join me ... we can get donuts after!!"
     },
     {
@@ -36,9 +40,11 @@ module.exports = [
         start_location: "Chester",
         end_location: "Cardiff",
         event_duration: "2 days",
+        event_distance: 500,
         skill_level: "Expert",
         gpx_url: "",
         repeats: "No",
+        title: "Tour De Wales",
         description: "Im doing a bike tour across the length of Wales, starting from Chester and going to Cardiff with a few friends, come and join us and lets make a peloton. Bring camping gear as we will sleep where we finish each day"
     },
     {
@@ -50,9 +56,11 @@ module.exports = [
         start_location: "Whistler, BC",
         end_location: "Whistler, BC",
         event_duration: "5 hours",
+        event_distance: 30,
         skill_level: "Advanced",
         gpx_url: "",
         repeats: "No",
+        title: "Easy Ski at Whistler",
         description: "I have a day off and wondered if anyone wanted to join me for a day at Whistler as I have a spare buddy pass. I will be doing Spankeys so bring your A-Game"
     }
 ]

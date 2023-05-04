@@ -16,6 +16,10 @@ exports.up = function (knex) {
             table.string('country').notNullable();
             table.integer('strava_id').notNullable();
             table.string('strava_url').notNullable();
+            table.string('fav_activity_1').notNullable();
+            table.string('fav_activity_2').notNullable();
+            table.string('fav_activity_3').notNullable();
+            table.string('bio').notNullable();
         }),
 
         // Create events table
@@ -28,9 +32,11 @@ exports.up = function (knex) {
             table.string('start_location').notNullable();
             table.string('end_location').notNullable();
             table.string('event_duration').notNullable();
+            table.integer('event_distance').notNullable();
             table.string('skill_level').notNullable();
             table.string('gpx_url').notNullable();
             table.string('repeats').notNullable();
+            table.string('title').notNullable();
             table.string('description').notNullable();
         }),
 

@@ -21,15 +21,17 @@ const singleEvent = (req, res) => {
             'events.start_location', 
             'events.end_location', 
             'events.event_duration', 
+            'events.event_distance',
             'events.skill_level', 
             'events.gpx_url', 
-            'events.repeats', 
+            'events.repeats',
+            'events.title',
             'events.description', 
             knex.raw('GROUP_CONCAT(DISTINCT CONCAT(event_users.user_id, ":", user.first_name, " ", user.last_name)) AS users_joined')
         )
         .leftJoin('event_users', 'events.id', 'event_users.event_id')
         .leftJoin('users AS user', 'event_users.user_id', 'user.id')
-        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.description')
+        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.event_distance', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.title', 'events.description')
         .where({ 'events.id': req.params.id })
         .then(data => {
             if (data.length === 0) {
@@ -54,16 +56,18 @@ const allEvents = (req, res) => {
             'events.start_location', 
             'events.end_location', 
             'events.event_duration', 
+            'events.event_distance',
             'events.skill_level', 
             'events.gpx_url', 
-            'events.repeats', 
+            'events.repeats',
+            'events.title',
             'events.description', 
             knex.raw('GROUP_CONCAT(DISTINCT CONCAT(event_users.user_id, ":", user.first_name, " ", user.last_name)) AS users_joined')
         )
         .leftJoin('users', 'events.created_by', 'users.id')
         .leftJoin('event_users', 'events.id', 'event_users.event_id')
         .leftJoin('users AS user', 'event_users.user_id', 'user.id')
-        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.description')
+        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.event_distance', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.title', 'events.description')
         .then(data => {
             if (data.length === 0) {
                 return res.status(404).send(`No records found`);
@@ -138,8 +142,10 @@ const addEvent = (req, res) => {
         isEmpty(req.body.start_location) ||
         isEmpty(req.body.end_location) ||
         isEmpty(req.body.event_duration) ||
+        isEmpty(req.body.event_distance) ||
         isEmpty(req.body.skill_level) ||
         isEmpty(req.body.repeats) ||
+        isEmpty(req.body.title) ||
         isEmpty(req.body.description)
     ) {
         return res.status(400).send('One or more fields are invalid');
@@ -220,8 +226,10 @@ const updateEvent = (req, res) => {
         isEmpty(req.body.start_location) ||
         isEmpty(req.body.end_location) ||
         isEmpty(req.body.event_duration) ||
+        isEmpty(req.body.event_distance) ||
         isEmpty(req.body.skill_level) ||
         isEmpty(req.body.repeats) ||
+        isEmpty(req.body.title) ||
         isEmpty(req.body.description)
     ) {
         return res.status(400).send('One or more fields are invalid');
