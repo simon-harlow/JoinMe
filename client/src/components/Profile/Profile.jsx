@@ -11,6 +11,7 @@ import './Profile.scss';
 const Profile = ({userData}) => {
 
   const [userCreatedEvents, setUserCreatedEvents] = useState([]);
+  const [userJoinedEvents, setUserJoinedEvents] = useState([]);
 
   const navigate = useNavigate();
 
@@ -25,6 +26,18 @@ const Profile = ({userData}) => {
       .then((response) => {
         console.log(response.data);
         setUserCreatedEvents(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [userData.id]);
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/events/users/${userData.id}/joined`)
+      .then((response) => {
+        console.log(response.data);
+        setUserJoinedEvents(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -53,7 +66,7 @@ const Profile = ({userData}) => {
       </div>
       <div className="created-events__card">
         <div className="created-events__title">
-          <h2 className="created-events__title-text">Events Organized By {userData.first_name}</h2>
+          <h2 className="created-events__title-text">{userData.first_name} is Organizing!</h2>
         </div>
         {userCreatedEvents.length === 0 ? (
           <p>No events created</p>
@@ -83,16 +96,58 @@ const Profile = ({userData}) => {
                       <p className="created-events__field-value">{event.event_duration}</p>
                     </div>
                     <div className="created-events__field">
-                      <h6 className="created-events__field-name">Skill level:</h6>
+                      <h6 className="created-events__field-name">Skill Level:</h6>
                       <p className="created-events__field-value">{event.skill_level}</p>
                     </div>
                     <div className="created-events__field">
-                      <h6 className="created-events__field-name">Start location:</h6>
+                      <h6 className="created-events__field-name">Start Location:</h6>
                       <p className="created-events__field-value">{event.start_location}</p>
                     </div>
-                    <div className="created-events__field">
-                      <h6 className="created-events__field-name">End location:</h6>
-                      <p className="created-events__field-value">{event.end_location}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <div className="created-events__card">
+        <div className="created-events__title">
+          <h2 className="created-events__title-text">{userData.first_name} has Joined!</h2>
+        </div>
+      {userJoinedEvents.length === 0 ? (
+          <p>No events joined</p>
+        ) : (
+          <div className="joined-events__list">
+            {userJoinedEvents.map((event) => (
+              <div key={event.id} onClick={() => handleClickEvent(event.id)} className="joined-events__event">
+                <div className="joined-events__icon">
+                  <ActivityIcon activityType={event.activity_type} />
+                </div>
+                <div className="joined-events__event-details">
+                  <div className="joined-events__event-header">
+                    <h3 className="joined-events__event-header-title">{event.title}</h3>
+                    <p className="joined-events__event-header-description">{event.description}</p>
+                  </div>
+                  <div className="joined-events__event-info">
+                    <div className="joined-events__field">
+                      <h6 className="joined-events__field-name">Activity type:</h6>
+                      <p className="joined-events__field-value">{event.activity_type}</p>
+                    </div>
+                    <div className="joined-events__field">
+                      <h6 className="joined-events__field-name">Distance:</h6>
+                      <p className="joined-events__field-value">{event.event_distance} km</p>
+                    </div>
+                    <div className="joined-events__field">
+                      <h6 className="joined-events__field-name">Duration:</h6>
+                      <p className="joined-events__field-value">{event.event_duration}</p>
+                    </div>
+                    <div className="joined-events__field">
+                      <h6 className="joined-events__field-name">Skill Level:</h6>
+                      <p className="joined-events__field-value">{event.skill_level}</p>
+                    </div>
+                    <div className="joined-events__field">
+                      <h6 className="joined-events__field-name">Start Location:</h6>
+                      <p className="joined-events__field-value">{event.start_location}</p>
                     </div>
                   </div>
                 </div>

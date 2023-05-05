@@ -112,6 +112,41 @@ const allEventsByUser = (req, res) => {
         .catch(err => res.status(400).send(`Error retrieving events ${err}`));
 };
 
+const allEventsUserJoined = (req, res) => {
+    knex('events')
+        .select(
+            'events.id', 
+            'events.created_by', 
+            'users.first_name', 
+            'users.last_name', 
+            'events.created_time', 
+            'events.event_time', 
+            'events.activity_type', 
+            'events.start_location', 
+            'events.end_location', 
+            'events.event_duration',
+            'events.event_distance',
+            'events.skill_level', 
+            'events.gpx_url', 
+            'events.repeats', 
+            'events.title',
+            'events.description', 
+            knex.raw('GROUP_CONCAT(DISTINCT CONCAT(event_users.user_id, ":", user.first_name, " ", user.last_name)) AS users_joined')
+        )
+        .leftJoin('users', 'events.created_by', 'users.id')
+        .leftJoin('event_users', 'events.id', 'event_users.event_id')
+        .leftJoin('users AS user', 'event_users.user_id', 'user.id')
+        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.description')
+        .havingRaw('users_joined LIKE ?', `%${req.params.userId}%`)
+        .then(data => {
+            if (data.length === 0) {
+                return res.status(404).send(`No records found`);
+            }
+            res.status(200).json(data);
+        })
+        .catch(err => res.status(400).send(`Error retrieving events ${err}`));
+};
+
 const eventUsers = (req, res) => {
     knex('event_users')
         .join('users', 'event_users.user_id', 'users.id')
@@ -306,6 +341,7 @@ module.exports = {
     singleEvent,
     allEvents,
     allEventsByUser,
+    allEventsUserJoined,
     eventUsers,
     eventComments,
     addEvent,
