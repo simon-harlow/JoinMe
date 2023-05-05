@@ -5,9 +5,21 @@
   box-sizing: border-box;
 }
 
+// Colors
+$strava-light-orange: #f7cdb9;
+$strava-orange: #fc5200;
+$strava-dark-orange: #ee4b00;
+$strava-grey: #eeeeee;
+$white: #ffffff;
+$black: #000000;
+
 // Global styling
 a {
   text-decoration: none;
+}
+
+body {
+  background-color: $strava-grey;
 }
 
 ::-webkit-scrollbar {
@@ -27,14 +39,6 @@ a {
 // ::-webkit-scrollbar-thumb:hover {
 //   background-color: $silver;
 // }
-
-// Colors
-$strava-light-orange: #f7cdb9;
-$strava-orange: #fc5200;
-$strava-dark-orange: #ee4b00;
-$strava-grey: #eeeeee;
-$white: #ffffff;
-$black: #000000;
 
 // Fonts
 @font-face {
