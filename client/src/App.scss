@@ -9,9 +9,10 @@
 $strava-light-orange: #f7cdb9;
 $strava-orange: #fc5200;
 $strava-dark-orange: #ee4b00;
-$strava-grey: #eeeeee;
+$strava-grey: #f7f7f7;
 $white: #ffffff;
 $black: #000000;
+$grey: #eeeeee;
 
 // Global styling
 a {
@@ -61,7 +62,7 @@ body {
 
 // font styles
 @mixin font-header {
-    font-size: 26px;
+    font-size: 33px;
     line-height: 44px;
     font-family: 'Avenir Regular';
     font-weight: 700;

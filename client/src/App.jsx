@@ -4,10 +4,10 @@ import axios from 'axios'
 
 import './App.scss';
 
-import { API_URL } from "./components/Utils/const";
+import { API_URL } from "./components/Utils/Const";
 import Menu from './components/Menu/Menu';
 import AllEvents from './components/AllEvents/AllEvents';
-import Event from './components/Event/Event';
+import EventDetails from './components/EventDetails/EventDetails';
 import Profile from './components/Profile/Profile';
 import Login from './pages/Login/Login';
 import NotFound from './pages/NotFound/NotFound';
@@ -38,7 +38,7 @@ function App() {
             )}
             <Route path="/login" element={<Login />} />
             <Route path="/events" element={<AllEvents userData={userData}/>} />
-            <Route path="/events/:id" element={<Event userData={userData}/>} />
+            <Route path="/events/:id" element={<EventDetails userData={userData}/>} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </main>
