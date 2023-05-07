@@ -4,49 +4,47 @@ import axios from 'axios';
 
 import { API_URL } from '../Utils/Const';
 import EventList from '../EventList/EventList';
-import ActivityIcon from '../Utils/ActivityIcons';
 import Location from "../../assets/icons/web/location_target.svg";
 import Strava from "../../assets/icons/web/strava_orange_icon.svg";
 import './Profile.scss';
 
-const Profile = ({userData}) => {
+const Profile = ({ userData }) => {
+	const [userCreatedEvents, setUserCreatedEvents] = useState([]);
+	const [userJoinedEvents, setUserJoinedEvents] = useState([]);
 
-  const [userCreatedEvents, setUserCreatedEvents] = useState([]);
-  const [userJoinedEvents, setUserJoinedEvents] = useState([]);
+	const navigate = useNavigate();
 
-  const navigate = useNavigate();
+	const handleClickEvent = (eventId) => {
+		navigate(`/events/${eventId}`);
+	};
 
-  const handleClickEvent = (eventId) => {
-    navigate(`/events/${eventId}`);
-  }
+	// to get events created by the the user
+	useEffect(() => {
+		axios
+			.get(`${API_URL}/events/users/${userData.id}`)
+			.then((response) => {
+				console.log(response.data);
+				setUserCreatedEvents(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, [userData.id]);
 
-  // to get events created by the the user
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/events/users/${userData.id}`)
-      .then((response) => {
-        console.log(response.data);
-        setUserCreatedEvents(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [userData.id]);
+	// to get events joined by the user
+	useEffect(() => {
+		axios
+			.get(`${API_URL}/events/users/${userData.id}/joined`)
+			.then((response) => {
+				console.log(response.data);
+				setUserJoinedEvents(response.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, [userData.id]);
 
-  // to get events joined by the user
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/events/users/${userData.id}/joined`)
-      .then((response) => {
-        console.log(response.data);
-        setUserJoinedEvents(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [userData.id]);
-  
-  return (
+	return (
 		<main className="profile">
 			<div className="profile__card">
 				<div className="profile__pic">
@@ -131,7 +129,7 @@ const Profile = ({userData}) => {
 				)}
 			</div>
 		</main>
-  );
+	);
 };
 
 export default Profile;

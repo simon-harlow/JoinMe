@@ -55,7 +55,7 @@
     }
 
     &__text {
-        font-size: 1.2rem;
-        font-weight: bold;
+        @include font-section-header;
+        color: $white;
     }
 }
