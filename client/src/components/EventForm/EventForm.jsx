@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import { API_URL } from "../Utils/Const";
+import Activities from '../Utils/Activities';
 import DateTimePicker from 'react-datetime-picker';
 import Button from "../Button/Button";
 import 'react-datetime-picker/dist/DateTimePicker.css';
@@ -37,9 +38,15 @@ function EventForm() {
 				.get(`${API_URL}/events/${eventId}`)
 				.then((response) => {
 					const data = response.data;
-					console.log(data);
 					setTitle(data.title);
 					setDescription(data.description);
+					setActivityType(data.activity_type);
+					setEventTime(new Date(Number(data.event_time))); // convert to Date as DateTimePicker expects a string
+					setStartLocation(data.start_location);
+					setEndLocation(data.end_location);
+					setEventDistance(data.event_distance);
+					setEventDuration(data.event_duration);
+					setSkillLevel(data.skill_level)
 				})
 				.catch((error) => {
 					console.error("Error fetching event data:", error);
@@ -71,7 +78,7 @@ function EventForm() {
 		if (!event_duration.trim()) {
 			errors.push("Duration is required");
 		}
-		if (!event_distance.trim()) {
+		if (!event_distance) {
 			errors.push("Distance is required");
 		}
 		if (!skill_level.trim()) {
@@ -80,50 +87,50 @@ function EventForm() {
 		return errors;
 	};
 
-		// handler for adding new warehouse
-		const handleFormSubmit = (event) => {
-			event.preventDefault();
-			const errors = isFormValid();
-	
-			if (errors.length === 0) {
-				const data = {
-					title,
-					description,
-					activity_type,
-					event_time,
-					start_location,
-					end_location,
-					event_duration,
-					event_distance,
-					skill_level,
-				};
-	
-				const method = isEdit ? "put" : "post";
-				const url = isEdit
-					? `${API_URL}/events/${eventId}`
-					: `${API_URL}/events`;
-	
-				axios[method](url, data)
-					.then(() => {
-						setFormErrors(null);
-						setTitle("");
-						setDescription("");
-						setActivityType("");
-						setEventTime("");
-						setStartLocation("");
-						setEndLocation("");
-						setEventDuration("");
-						setEventDistance("");
-						setSkillLevel("");
-						formRedirect();
-					})
-					.catch((error) => {
-						console.error(error);
-					});
-			} else {
-				setFormErrors(errors);
-			}
-		};
+	// handler for adding new warehouse
+	const handleFormSubmit = (event) => {
+		event.preventDefault();
+		const errors = isFormValid();
+
+		if (errors.length === 0) {
+			const data = {
+				title,
+				description,
+				activity_type,
+				event_time,
+				start_location,
+				end_location,
+				event_duration,
+				event_distance,
+				skill_level,
+			};
+
+			const method = isEdit ? "put" : "post";
+			const url = isEdit
+				? `${API_URL}/events/${eventId}`
+				: `${API_URL}/events`;
+
+			axios[method](url, data)
+				.then(() => {
+					setFormErrors([]);
+					setTitle("");
+					setDescription("");
+					setActivityType("");
+					setEventTime("");
+					setStartLocation("");
+					setEndLocation("");
+					setEventDuration("");
+					setEventDistance("");
+					setSkillLevel("");
+					formRedirect();
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		} else {
+			setFormErrors(errors);
+		}
+	};
 
 
 	return (
@@ -142,38 +149,47 @@ function EventForm() {
 							className="event-form__form-input"
 							type="text"
 							id="title"
+							name="title"
+							maxLength="50"
 							value={title}
 							onChange={(event) => setTitle(event.target.value)}
 						/>
 
+
 						<label className="event-form__form-label" htmlFor="description">Description:</label>
 						<input
 							className="event-form__form-input event-form__form-input--textarea"
-							type="textarea"
+							as="textarea"
 							id="description"
+							name="description"
+							maxLength="200"
 							value={description}
 							onChange={(event) => setDescription(event.target.value)}
 						/>
 
 						<label className="event-form__form-label" htmlFor="activity_type">Activity Type:</label>
 						<select
-							className="event-form__form-select"
-							id="activity_type"
-							value={activity_type}
-							onChange={(event) => setActivityType(event.target.value)}
+						className="event-form__form-select"
+						id="activity_type"
+						name="activity_type"
+						value={activity_type}
+						onChange={(event) => setActivityType(event.target.value)}
 						>
-							<option value="">Select an activity type</option>
-							<option value="Run">Run</option>
-							<option value="Bike">Bike</option>
-							<option value="Swim">Swim</option>
-							<option value="Downhill Ski">Downhill Ski</option>
-							<option value="Other">Other</option>
+							<option value="" disabled hidden>
+								{isEdit ? "Please select an activity type" : "Choose an activity type"}
+							</option>
+							{Activities.map((activity, index) => (
+								<option key={index} value={activity}>
+								{activity}
+								</option>
+							))}
 						</select>
 
 						<label className="event-form__form-label" htmlFor="event_time">Date & Time:</label>
 						<DateTimePicker
 						onChange={(event) => setEventTime(event.getTime())}
-						id={"event_time"}
+						id="event_time"
+						name="event_time"
 						value={event_time}
 						minDate={new Date()}
 						showLeadingZeros={true}
@@ -190,6 +206,8 @@ function EventForm() {
 							className="event-form__form-input"
 							type="text"
 							id="start_location"
+							name="start_location"
+							maxLength="30"
 							value={start_location}
 							onChange={(event) => setStartLocation(event.target.value)}
 						/>
@@ -199,6 +217,8 @@ function EventForm() {
 							className="event-form__form-input"
 							type="text"
 							id="end_location"
+							name="end_location"
+							maxLength="30"
 							value={end_location}
 							onChange={(event) => setEndLocation(event.target.value)}
 						/>
@@ -208,16 +228,20 @@ function EventForm() {
 							className="event-form__form-input"
 							type="text"
 							id="event_duration"
+							name="event_duration"
+							maxLength="10"
 							value={event_duration}
 							onChange={(event) => setEventDuration(event.target.value)}
 						/>
 
-						<label className="event-form__form-label" htmlFor="event_distance">Distance:</label>
+						<label className="event-form__form-label" htmlFor="event_distance">Distance (KM):</label>
 						<input
 							className="event-form__form-input"
 							type="text"
 							id="event_distance"
+							name="event_distance"
 							value={event_distance}
+							maxLength="4"
 							onChange={(event) => setEventDistance(event.target.value)}
 						/>
 
@@ -225,20 +249,24 @@ function EventForm() {
 						<select
 							className="event-form__form-select"
 							id="skill_level"
+							name="skill_level"
 							value={skill_level}
 							onChange={(event) => setSkillLevel(event.target.value)}
 						>
-							<option value="">Select an intensity level</option>
-							<option value="Easy">Easy</option>
-							<option value="Moderate">Moderate</option>
-							<option value="Advanced">Advanced</option>
-							<option value="Elite">Elite</option>
+							<option value="" disabled hidden>
+								{isEdit ? "Please select an intensity level" : "Choose an intensity level"}
+							</option>
+							{["Easy", "Moderate", "Advanced", "Elite"].map((option) => (
+								<option key={option} value={option}>
+									{option}
+								</option>
+							))}
 						</select>
 						</div>
 					</div>
 					<div className="event-form__form-buttons">
 						<Button text="Cancel" textColor="#000000" bgColor="#eeeeee" onClick={backPage}/>
-						<Button type="submit" text="Create Event" onSubmit={handleFormSubmit}/>
+						<Button type="submit" text={isEdit ? "Update Event" : "Create Event"} onSubmit={handleFormSubmit}/>
 					</div>
 				</form>
 			</div>

@@ -273,7 +273,6 @@ const updateEvent = (req, res) => {
         isEmpty(req.body.event_duration) ||
         isEmpty(req.body.event_distance) ||
         isEmpty(req.body.skill_level) ||
-        isEmpty(req.body.repeats) ||
         isEmpty(req.body.title) ||
         isEmpty(req.body.description)
     ) {
@@ -292,6 +291,9 @@ const updateEvent = (req, res) => {
             } else {
                 const updatedEvent = {
                     id: req.params.id,
+                    gpx_url: req.gpx_file ? `http://localhost:8080/images/${req.gpx_url}` : "",
+                    // Repeats has been removed from UI form as this is a placeholder for later phase. Hard-Code "no" for now
+                    repeats: "No",
                     ...req.body
                 };
                 res.status(200).send(updatedEvent)

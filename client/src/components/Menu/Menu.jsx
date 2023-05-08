@@ -10,8 +10,6 @@ import Logout from "../../assets/icons/web/logout.svg";
 
 const Menu = ({ userData }) => {
 
-	console.log(userData);
-
 	return (
 		<nav className="menu">
 			<header className="menu__header">

@@ -24,6 +24,10 @@ const AllEvents = () => {
 
   const handleClickCreateEvent = () => navigate(`/events/new`)
 
+  const handleClickEvent = (eventId) => {
+		navigate(`/events/${eventId}`);
+	};
+
   return (
     <main className="all-events">
       <div className="all-events__banner-card">
@@ -41,7 +45,11 @@ const AllEvents = () => {
       <div className="all-events__event-card">
         <div className="all-events__list">
             {events.map(event => (
-              <EventList key={event.id} event={event} />
+              <EventList
+              key={event.id}
+              event={event}
+              handleClickEvent={handleClickEvent}
+              />
             ))}
         </div>
       </div>

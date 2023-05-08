@@ -40,7 +40,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/events" element={<AllEvents userData={userData}/>} />
             <Route path="/events/new" element={<EventForm userData={userData}/>} />
-            <Route path="/events/edit/:id" element={<EventForm userData={userData}/>} />
+            <Route path="/events/edit/:eventId" element={<EventForm userData={userData}/>} />
             <Route path="/events/:id" element={<EventDetails userData={userData}/>} />
             <Route path="/*" element={<NotFound />} />
           </Routes>

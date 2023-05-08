@@ -4,6 +4,7 @@ import { ReactComponent as RunIcon } from '../../assets/icons/activity/run.svg';
 import { ReactComponent as HikeIcon } from '../../assets/icons/activity/hike.svg';
 import { ReactComponent as BikeIcon } from '../../assets/icons/activity/bike.svg';
 import { ReactComponent as CrossfitIcon } from '../../assets/icons/activity/crossfit.svg';
+import { ReactComponent as GymIcon } from '../../assets/icons/activity/crossfit.svg';
 import { ReactComponent as GolfIcon } from '../../assets/icons/activity/golf.svg';
 import { ReactComponent as KayakIcon } from '../../assets/icons/activity/kayak.svg';
 import { ReactComponent as KitesurfIcon } from '../../assets/icons/activity/kitesurf.svg';
@@ -33,6 +34,9 @@ const ActivityIcon = ({ activityType }) => {
             break;
         case 'Crossfit':
             icon = <CrossfitIcon />;
+            break;
+        case 'Gym':
+            icon = <GymIcon />;
             break;
         case 'Golf':
             icon = <GolfIcon />;
