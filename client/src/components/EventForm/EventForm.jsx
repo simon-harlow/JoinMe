@@ -1,127 +1,246 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
+import { API_URL } from "../Utils/Const";
+import DateTimePicker from 'react-datetime-picker';
 import Button from "../Button/Button";
+import 'react-datetime-picker/dist/DateTimePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import "./EventForm.scss";
 
 function EventForm() {
+	// check for existence of eventId, if true then render edit event and not create event
+	const { eventId } = useParams();
+	const isEdit = !!eventId;
+
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [eventTime, setEventTime] = useState(new Date());
-	const [activityType, setActivityType] = useState("");
-	const [startLocation, setStartLocation] = useState("");
-	const [endLocation, setEndLocation] = useState("");
-	const [duration, setDuration] = useState("");
-	const [distance, setDistance] = useState("");
-	const [intensityLevel, setIntensityLevel] = useState("");
+	const [event_time, setEventTime] = useState("");
+	const [activity_type, setActivityType] = useState("");
+	const [start_location, setStartLocation] = useState("");
+	const [end_location, setEndLocation] = useState("");
+	const [event_duration, setEventDuration] = useState("");
+	const [event_distance, setEventDistance] = useState("");
+	const [skill_level, setSkillLevel] = useState("");
 
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		// code to send form data to database
+	const [formErrors, setFormErrors] = useState();
+
+	const navigate = useNavigate();
+	const formRedirect = () => navigate(`/events`);
+	const backPage = () => navigate(-1);
+
+	useEffect(() => {
+		// Only get data if isEdit is true
+		if (isEdit) {
+			axios
+				.get(`${API_URL}/events/${eventId}`)
+				.then((response) => {
+					const data = response.data;
+					console.log(data);
+					setTitle(data.title);
+					setDescription(data.description);
+				})
+				.catch((error) => {
+					console.error("Error fetching event data:", error);
+				});
+		}
+	}, [isEdit, eventId]);
+
+	const isFormValid = () => {
+		const errors = [];
+
+		if (!title.trim()) {
+			errors.push("Title is required");
+		}
+		if (!description.trim()) {
+			errors.push("Description is required");
+		}
+		if (!activity_type.trim()) {
+			errors.push("Activity Type is required");
+		}
+		if (!event_time) {
+			errors.push("Date & Time is required");
+		}
+		if (!start_location.trim()) {
+			errors.push("Start Location is required");
+		}
+		if (!end_location.trim()) {
+			errors.push("End Location is required");
+		}
+		if (!event_duration.trim()) {
+			errors.push("Duration is required");
+		}
+		if (!event_distance.trim()) {
+			errors.push("Distance is required");
+		}
+		if (!skill_level.trim()) {
+			errors.push("Intensity Level is required");
+		}
+		return errors;
 	};
+
+		// handler for adding new warehouse
+		const handleFormSubmit = (event) => {
+			event.preventDefault();
+			const errors = isFormValid();
+	
+			if (errors.length === 0) {
+				const data = {
+					title,
+					description,
+					activity_type,
+					event_time,
+					start_location,
+					end_location,
+					event_duration,
+					event_distance,
+					skill_level,
+				};
+	
+				const method = isEdit ? "put" : "post";
+				const url = isEdit
+					? `${API_URL}/events/${eventId}`
+					: `${API_URL}/events`;
+	
+				axios[method](url, data)
+					.then(() => {
+						setFormErrors(null);
+						setTitle("");
+						setDescription("");
+						setActivityType("");
+						setEventTime("");
+						setStartLocation("");
+						setEndLocation("");
+						setEventDuration("");
+						setEventDistance("");
+						setSkillLevel("");
+						formRedirect();
+					})
+					.catch((error) => {
+						console.error(error);
+					});
+			} else {
+				setFormErrors(errors);
+			}
+		};
+
 
 	return (
 		<main className="event-form">
 			<div className="event-form__card">
 				<div className="event-form__header">
 					<h1 className="event-form__header-title">
-						Create New Event
+						Create Event
 					</h1>
 				</div>
-				<form className="event-form__form" onSubmit={handleSubmit}>
-                    <div className="event-form__form-left">
-					<label className="event-form__form-label" htmlFor="title">Title:</label>
-					<input
-                        className="event-form__form-input"
-						type="text"
-						id="title"
-						value={title}
-						onChange={(event) => setTitle(event.target.value)}
-					/>
+				<form onSubmit={handleFormSubmit}>
+					<div className="event-form__form">
+						<div className="event-form__form-left">
+						<label className="event-form__form-label" htmlFor="title">Title:</label>
+						<input
+							className="event-form__form-input"
+							type="text"
+							id="title"
+							value={title}
+							onChange={(event) => setTitle(event.target.value)}
+						/>
 
-					<label className="event-form__form-label" htmlFor="description">Description:</label>
-					<input
-                        className="event-form__form-input event-form__form-input--textarea"
-						type="textarea"
-						id="description"
-						value={description}
-						onChange={(event) => setDescription(event.target.value)}
-					/>
+						<label className="event-form__form-label" htmlFor="description">Description:</label>
+						<input
+							className="event-form__form-input event-form__form-input--textarea"
+							type="textarea"
+							id="description"
+							value={description}
+							onChange={(event) => setDescription(event.target.value)}
+						/>
 
-					<label className="event-form__form-label" htmlFor="activity-type">Activity Type:</label>
-					<select
-                        className="event-form__form-select"
-						id="activity-type"
-						value={activityType}
-						onChange={(event) => setActivityType(event.target.value)}
-					>
-						<option className="event-form__form-select-option" value="">Select an activity type</option>
-						<option className="event-form__form-select-option" value="Run">Run</option>
-						<option className="event-form__form-select-option" value="Bike">Bike</option>
-						<option className="event-form__form-select-option" value="Swim">Swim</option>
-						<option className="event-form__form-select-option" value="Downhill Ski">Downhill Ski</option>
-						<option className="event-form__form-select-option" value="Other">Other</option>
-					</select>
+						<label className="event-form__form-label" htmlFor="activity_type">Activity Type:</label>
+						<select
+							className="event-form__form-select"
+							id="activity_type"
+							value={activity_type}
+							onChange={(event) => setActivityType(event.target.value)}
+						>
+							<option value="">Select an activity type</option>
+							<option value="Run">Run</option>
+							<option value="Bike">Bike</option>
+							<option value="Swim">Swim</option>
+							<option value="Downhill Ski">Downhill Ski</option>
+							<option value="Other">Other</option>
+						</select>
 
-					<label className="event-form__form-label" htmlFor="event-time">Event Time:</label>
+						<label className="event-form__form-label" htmlFor="event_time">Date & Time:</label>
+						<DateTimePicker
+						onChange={(event) => setEventTime(event.getTime())}
+						id={"event_time"}
+						value={event_time}
+						minDate={new Date()}
+						showLeadingZeros={true}
+						minDetail={"year"}
+						clearIcon={null}
+						disableClock={true}
+						locale={"en-GB"}
+						/>
 
+						</div>
+						<div className="event-form__form-right">
+						<label className="event-form__form-label" htmlFor="start_location">Start Location:</label>
+						<input
+							className="event-form__form-input"
+							type="text"
+							id="start_location"
+							value={start_location}
+							onChange={(event) => setStartLocation(event.target.value)}
+						/>
 
-                    </div>
-                    <div className="event-form__form-right">
-					<label className="event-form__form-label" htmlFor="start-location">Start Location:</label>
-					<input
-                        className="event-form__form-input"
-						type="text"
-						id="start-location"
-						value={startLocation}
-						onChange={(event) => setStartLocation(event.target.value)}
-					/>
+						<label className="event-form__form-label" htmlFor="end_location">End Location:</label>
+						<input
+							className="event-form__form-input"
+							type="text"
+							id="end_location"
+							value={end_location}
+							onChange={(event) => setEndLocation(event.target.value)}
+						/>
 
-					<label className="event-form__form-label" htmlFor="end-location">End Location:</label>
-					<input
-                        className="event-form__form-input"
-						type="text"
-						id="end-location"
-						value={endLocation}
-						onChange={(event) => setEndLocation(event.target.value)}
-					/>
+						<label className="event-form__form-label" htmlFor="event_duration">Duration:</label>
+						<input
+							className="event-form__form-input"
+							type="text"
+							id="event_duration"
+							value={event_duration}
+							onChange={(event) => setEventDuration(event.target.value)}
+						/>
 
-					<label className="event-form__form-label" htmlFor="duration">Duration:</label>
-					<input
-                        className="event-form__form-input"
-						type="text"
-						id="duration"
-						value={duration}
-						onChange={(event) => setDuration(event.target.value)}
-					/>
+						<label className="event-form__form-label" htmlFor="event_distance">Distance:</label>
+						<input
+							className="event-form__form-input"
+							type="text"
+							id="event_distance"
+							value={event_distance}
+							onChange={(event) => setEventDistance(event.target.value)}
+						/>
 
-					<label className="event-form__form-label" htmlFor="distance">Distance:</label>
-					<input
-                        className="event-form__form-input"
-						type="text"
-						id="distance"
-						value={distance}
-						onChange={(event) => setDistance(event.target.value)}
-					/>
-
-					<label className="event-form__form-label" htmlFor="intensity-level">Intensity Level:</label>
-					<select
-                        className="event-form__form-select"
-						id="intensity-level"
-						value={intensityLevel}
-						onChange={(event) => setIntensityLevel(event.target.value)}
-					>
-						<option value="">Select an intensity level</option>
-						<option value="Easy">Easy</option>
-						<option value="Moderate">Moderate</option>
-						<option value="Advanced">Advanced</option>
-						<option value="Elite">Elite</option>
-					</select>
-                    </div>
+						<label className="event-form__form-label" htmlFor="skill_level">Intensity Level:</label>
+						<select
+							className="event-form__form-select"
+							id="skill_level"
+							value={skill_level}
+							onChange={(event) => setSkillLevel(event.target.value)}
+						>
+							<option value="">Select an intensity level</option>
+							<option value="Easy">Easy</option>
+							<option value="Moderate">Moderate</option>
+							<option value="Advanced">Advanced</option>
+							<option value="Elite">Elite</option>
+						</select>
+						</div>
+					</div>
+					<div className="event-form__form-buttons">
+						<Button text="Cancel" textColor="#000000" bgColor="#eeeeee" onClick={backPage}/>
+						<Button type="submit" text="Create Event" onSubmit={handleFormSubmit}/>
+					</div>
 				</form>
-                <div className="event-form__form-buttons">
-                    <Button type="cancel" text="Cancel" bgColor="#eeeeee"/>
-                    <Button type="submit" text="Create Event"/>
-                </div>
 			</div>
 		</main>
 	);

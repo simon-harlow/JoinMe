@@ -2,19 +2,20 @@
 
 .button {
     background-color: $strava-orange;
+    color: $white;
     padding: 1rem;
     border: none;
     border-radius: 0.5rem;
-    font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    // transition: all 0.3s ease;
 
     &:hover, &:focus {
         background-color: $strava-dark-orange;
+        border: 1px solid $strava-orange
     }
 
     &-text {
         @include font-body;
-        color: $white;
+        color: inherit;
     }
 }

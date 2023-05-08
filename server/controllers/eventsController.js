@@ -181,7 +181,6 @@ const addEvent = (req, res) => {
         isEmpty(req.body.event_duration) ||
         isEmpty(req.body.event_distance) ||
         isEmpty(req.body.skill_level) ||
-        isEmpty(req.body.repeats) ||
         isEmpty(req.body.title) ||
         isEmpty(req.body.description)
     ) {
@@ -191,7 +190,16 @@ const addEvent = (req, res) => {
     // Hard-coding my user_id until auth added in phase 2
     const created_by = '4780c8ef-6659-4f56-a6ea-cd0486a39f59';
 
-    const newEvent = { id: uuid(), created_time: Date.now(), created_by, ...req.body };
+    const newEvent = {
+        id: uuid(),
+        created_time: Date.now(),
+        created_by,
+        gpx_url: req.gpx_file ? `http://localhost:8080/images/${req.gpx_url}` : "",
+        // Repeats has been removed from UI form as this is a placeholder for later phase. Hard-Code "no" for now
+        repeats: "No",
+        ...req.body
+    };
+
     knex('events')
         .insert(newEvent)
         .then(data => {
