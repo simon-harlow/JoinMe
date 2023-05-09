@@ -41,7 +41,7 @@ function EventForm() {
 					setTitle(data.title);
 					setDescription(data.description);
 					setActivityType(data.activity_type);
-					setEventTime(new Date(Number(data.event_time))); // convert to Date as DateTimePicker expects a string
+					setEventTime(data.event_time);
 					setStartLocation(data.start_location);
 					setEndLocation(data.end_location);
 					setEventDistance(data.event_distance);
