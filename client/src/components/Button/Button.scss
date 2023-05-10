@@ -7,11 +7,9 @@
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
-    // transition: all 0.3s ease;
 
     &:hover, &:focus {
         background-color: $strava-dark-orange;
-        border: 1px solid $strava-orange
     }
 
     &-text {

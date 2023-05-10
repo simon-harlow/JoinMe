@@ -42,6 +42,7 @@ function App() {
             <Route path="/events/new" element={<EventForm userData={userData}/>} />
             <Route path="/events/edit/:eventId" element={<EventForm userData={userData}/>} />
             <Route path="/events/:eventId" element={<EventDetails userData={userData}/>} />
+            <Route path={`/users/:userId`} element={<Profile />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </main>

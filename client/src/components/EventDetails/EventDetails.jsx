@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from 'axios';
 
 import { API_URL } from '../Utils/Const';
+import timeAgoDate from "../Utils/TimeAgoDate";
+import ActivityIcon from '../Utils/ActivityIcons';
+import GoogleMap from '../../assets/images/google-map-placeholder.PNG';
 import Button from '../Button/Button';
 import './EventDetails.scss'
 
@@ -10,7 +13,12 @@ function EventDetails({ userData }) {
 
   const { eventId } = useParams();
   const [event, setEvent] = useState([]);
+  const [joinedUsers, setJoinedUsers] = useState([]);
   const [loggedInUserEvent, setLoggedInUserEvent] = useState(false);
+  const [eventUserData, setEventUserData] = useState("");
+  const [commentsData, setCommentsData] = useState([]);
+
+  const numUsersJoinedEvent = joinedUsers.length;
 
   const navigate = useNavigate();
 
@@ -18,45 +26,198 @@ function EventDetails({ userData }) {
     axios
       .get(`${API_URL}/events/${eventId}`)
       .then(response => {
-        console.log(response.data);
         setEvent(response.data);
-        if (response.data.created_by === userData.id) {
+        if (userData && response.data.created_by === userData.id) {
           setLoggedInUserEvent(true);
-          console.log(loggedInUserEvent);
+          setEventUserData(userData);
         } else {
           setLoggedInUserEvent(false);
-          console.log(loggedInUserEvent);
+          const createdByUserID = response.data.created_by
+          axios
+            .get(`${API_URL}/users/${createdByUserID}`)
+            .then(response => {
+              setEventUserData(response.data);
+            })
+            .catch(error => {
+              console.log(error);
+            });
         }
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    axios
+      .get(`${API_URL}/events/${eventId}/users`)
+      .then(response => {
+        setJoinedUsers(response.data);
+        console.log("joined users ######### ",response.data);
+        console.log(joinedUsers);
       })
       .catch(error => {
         console.log(error);
       });
   }, []);
 
+	useEffect(() => {
+		axios
+      .get(`${API_URL}/events/${eventId}/comments`)
+			.then((response) => {
+        console.log("comments data", response.data);
+				setCommentsData(response.data)
+			})
+			.catch((error) => console.log(error));
+	}, []);
+
+  const numberOfComments = commentsData.length
+  const sortedComments = commentsData.sort((a, b) => b.timestamp - a.timestamp);
 
   return (
     <main className="event-details">
-      <div className="event-details__header-card">
-        <div>
-          <p><strong>Activity Type:</strong> {event.activity_type}</p>
-          <p><strong>Created By:</strong> {event.created_by}</p>
-          <p><strong>Created Time:</strong> {event.created_time}</p>
-          <p><strong>Description:</strong> {event.description}</p>
-          <p><strong>End Location:</strong> {event.end_location}</p>
-          <p><strong>Event Distance:</strong> {event.event_distance}</p>
-          <p><strong>Event Duration:</strong> {event.event_duration}</p>
-          <p><strong>Event Time:</strong> {event.event_time}</p>
-          <p><strong>First Name:</strong> {event.first_name}</p>
-          <p><strong>GPX URL:</strong> {event.gpx_url}</p>
-          <p><strong>ID:</strong> {event.id}</p>
-          <p><strong>Last Name:</strong> {event.last_name}</p>
-          <p><strong>Repeats:</strong> {event.repeats}</p>
-          <p><strong>Skill Level:</strong> {event.skill_level}</p>
-          <p><strong>Start Location:</strong> {event.start_location}</p>
-          <p><strong>Title:</strong> {event.title}</p>
-          <p><strong>Users Joined:</strong> {event.users_joined}</p>
+      <header className="event-details__card event-details__card--title" >
+        <div className="event-details__card--title-left">
+          <div className="event-details__icon">
+            <ActivityIcon activityType={event.activity_type} />
+          </div>
         </div>
-      </div>
+        <div className="event-details__card--title-right">
+          <div className="event-details__header">
+            <h1 className="event-details__header-title">{event.title}</h1>
+          </div>
+          <div className="event-details__title-button">
+          {loggedInUserEvent && (
+            <Button
+              // onClick={() => handleDelete(event.id)}
+              text="Delete Event"
+            />
+          )}
+          {!loggedInUserEvent && (
+            <Button
+              // onClick={() => handleJoin(event.id)}
+              text={joinedUsers.some(user => user.id === userData.id) ? "Leave Event" : "Join Event"}
+            />
+          )}
+          </div>
+        </div>
+      </header>
+        <article className="event-details__card event-details__card--details">
+          <div className="event-details__card--details-deets">
+            <div className="event-details__card--details-host">
+              <div className="event-details__host">
+                <h6 className="event-details__host-organized">
+                  Organized By:
+                </h6>
+              </div>
+              <Link to={`/users/${eventUserData.id}`}>
+              <div className="event-details__host-pic">
+                <img
+                  src={eventUserData.avatar_url}
+                  alt="avatar"
+                  className="event-details__host-pic-img"
+                />
+              </div>
+              <div className="event-details__host-name">
+                <p className="event-details__host-name-text">
+                  {eventUserData.first_name} {eventUserData.last_name}
+                </p>
+              </div>
+              </Link>
+            </div>
+            <div className="event-details__card--details-desc">
+              <div className="event-details__field">
+                <h6 className="event-details__field-name">Description:</h6>
+                <p className="event-details__field-value">{event.description}</p>
+              </div>
+            </div>
+            <div className="event-details__card--details-info">
+              <div className="event-details__card--details-info-left">
+                <div className="event-details__field">
+                  <h6 className="event-details__field-name">Date & Time:</h6>
+                  <p className="event-details__field-value">
+                    {new Date(event.event_time).toLocaleString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}
+                  </p>
+                </div>
+                <div className="event-details__field">
+                  <h6 className="event-details__field-name">Distance:</h6>
+                  <p className="event-details__field-value">{event.event_distance} km</p>
+                </div>
+                <div className="event-details__field">
+                  <h6 className="event-details__field-name">Duration:</h6>
+                  <p className="event-details__field-value">{event.event_duration}</p>
+                </div>
+              </div>
+              <div className="event-details__card--details-info-right">
+                <div className="event-details__field">
+                  <h6 className="event-details__field-name">Intensity Level:</h6>
+                  <p className="event-details__field-value">{event.skill_level}</p>
+                </div>
+                <div className="event-details__field">
+                  <h6 className="event-details__field-name">Start Location:</h6>
+                  <p className="event-details__field-value">{event.start_location}</p>
+                </div>
+                <div className="events-list__field">
+                  <h6 className="events-list__field-name">End Location:</h6>
+                  <p className="events-list__field-value">{event.end_location}</p>
+                </div>
+              </div>
+            </div>
+            <div className="event-details__card--details-map">
+              {/* This is a placeholder map for visuals.
+              In a later phase I would ike to allow the user to add location and pin for start and end locations */}
+                <img className="event-details__map" src={GoogleMap}/>
+            </div>
+          </div>
+          <div className="event-details__card--details-joined">
+            <div className="event-details__joined">
+                <h6 className="event-details__joined-title">{numUsersJoinedEvent} {numUsersJoinedEvent === 1 ? 'Athlete Joined:' : 'Athletes Joined:'}</h6>
+            </div>
+            <div className="event-details__users">
+              {joinedUsers.map(user => (
+                  <Link to={`/users/${user.id}`}>
+                  <div className="event-details__users-joined" key={user.id}>
+                    <img className="event-details__users-pic" src={user.avatar_url} alt={`${user.first_name} ${user.last_name}`} />
+                    <p className="event-details__users-name">{user.first_name} {user.last_name}</p>
+                  </div>
+                  </Link>
+                ))}
+            </div>
+          </div>
+        </article>
+        <article className="event-details__card event-details__card--comments" >
+          <div className="event-details__comments">
+              <h3 className="event-details__comments-title">Comments</h3>
+              {/* <CommentsForm
+              currentVideoData={currentVideoData}
+              addComment={addComment}
+              /> */}
+            <div className="old-comments-container">
+                {sortedComments.map((comment) => (
+                <div className="old-comments" id={comment.id} key={comment.id}>
+                    <div className="old-comments__left-container">
+                        <img className="old-comments__profile-pic" src={comment.avatar_url} alt={comment.first_name} />
+                    </div>
+                    <div className="old-comments__right-container">
+                        <div className="old-comments__title-container">
+                            <h5 className="old-comments__name">{comment.name}</h5>
+                            <p className="old-comments__date">{timeAgoDate(comment.created_time)}</p>
+                        </div>
+                        <div className="old-comments__text-container">
+                            <p className="old-comments__text">{comment.comment}</p>
+                        </div>
+                        <div className="old-comments__button-container">
+                            <button className="old-comments__button">
+                                <img src={""} alt="like icon"/>
+                            </button>
+                            <span className="old-comments__button-count">{comment.likes}</span>
+                            <button className="old-comments__button">
+                                <img src={""} alt="delete icon"/>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            ))}
+            </div>
+          </div>
+        </article>
     </main>
   )
 }

@@ -136,11 +136,11 @@ function EventForm() {
 	return (
 		<main className="event-form">
 			<div className="event-form__card">
-				<div className="event-form__header">
+				<header className="event-form__header">
 					<h1 className="event-form__header-title">
 						Create Event
 					</h1>
-				</div>
+				</header>
 				<form onSubmit={handleFormSubmit}>
 					<div className="event-form__form">
 						<div className="event-form__form-left">

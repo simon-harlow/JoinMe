@@ -30,7 +30,7 @@ const AllEvents = () => {
 
   return (
     <main className="all-events">
-      <div className="all-events__banner-card">
+      <header className="all-events__banner-card">
         <div className="all-events__banner-header">
           <h1 className="all-events__banner-header-title">Events</h1>
         </div>
@@ -41,7 +41,7 @@ const AllEvents = () => {
         <div className="all-events__banner-create">
         <Button onClick={handleClickCreateEvent} text="Create Event" />
         </div>
-      </div>
+      </header>
       <div className="all-events__event-card">
         <div className="all-events__list">
             {events.map(event => (

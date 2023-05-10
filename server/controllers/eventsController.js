@@ -150,7 +150,7 @@ const allEventsUserJoined = (req, res) => {
 const eventUsers = (req, res) => {
     knex('event_users')
         .join('users', 'event_users.user_id', 'users.id')
-        .select('users.id', 'users.first_name', 'users.last_name')
+        .select('users.id', 'users.first_name', 'users.last_name', 'users.avatar_url')
         .where({ 'event_users.event_id': req.params.id })
         .then(data => {
             res.status(200).json(data);
@@ -160,7 +160,7 @@ const eventUsers = (req, res) => {
 
 const eventComments = (req, res) => {
     knex('comments')
-        .select('comments.id', 'comments.user_id', 'users.first_name', 'users.last_name', 'comments.created_time', 'comments.comment')
+        .select('comments.id', 'comments.user_id', 'users.first_name', 'users.last_name', 'users.avatar_url', 'comments.created_time', 'comments.comment')
         .join('users', 'comments.user_id', 'users.id')
         .where('comments.event_id', req.params.id)
         .then(data => {

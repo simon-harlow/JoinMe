@@ -6,7 +6,7 @@
     gap: 20px;
     padding: 1rem;
 
-    &__header-card {
+    &__card {
         background-color: $white;
         border-radius: 0.5rem;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -14,6 +14,193 @@
         flex-direction: row;
         align-items: center;
         padding: 2rem;
+
+        &--title {
+            justify-content: flex-start;
+            align-items: flex-end;
+            height: 100%;
+
+            &-right {
+                padding-left: 3rem;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+            }
+        }
+
+        &--details {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            width: 100%;
+
+            &-deets {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: stretch;
+                width: 100%;
+                padding-bottom: 1rem;
+                border-bottom: 2px solid $grey;
+            }
+
+            &-desc {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                border-right: 2px solid $grey;
+                padding: 0 3rem;
+            }
+
+            &-host {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                border-right: 2px solid $grey;
+                padding-right: 3rem;
+            }
+
+            &-info {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-between;
+                gap: 2rem;
+                padding: 0 3rem;
+                width: 40%;
+
+                &-left, &-right {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: stretch;
+                    justify-content: space-between;
+                    height: 100%;
+                }
+            }
+
+            &-map {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 2rem;
+                padding-left: 3rem;
+                border-left: 2px solid $grey;
+            }
+
+            &-joined {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                width: 100%;
+                padding-top: 2rem;
+            }
+        }
+
+        &--comments {
+            
+        }
+    }
+
+    &__icon {
+        background-color: $white;
+    }
+
+    &__header {
+        &-title {
+            @include font-header;
+        }
+
+        &-desc {
+            @include font-body;
+        }
+    }
+
+    &__host {
+
+        &-organized {
+        @include font-label;
+        color: $strava-orange;
+        padding-bottom: 1rem;
+        }
+
+        &-pic {
+    
+            &-img {
+                background-color: $strava-grey;
+                border-radius: 50%;
+                height: 10rem;
+                width: 10rem;
+            }
+        }
+
+        &-name {
+            @include font-body;
+            padding-top: 1rem;
+            text-align: center
+        }
+    }
+
+    &__field {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: space-between;
+    
+        &-name {
+            @include font-label;
+            color: $strava-orange;
+            padding-bottom: 0.25rem;
+        }
+    
+        &-value {
+            @include font-body;
+        }
+    }
+
+    &__map {
+        object-fit: cover;
+        height: 15rem;
+        width: 20rem;
+        border-radius: 0.5rem;
+    }
+
+    &__joined {
+
+        &-title{
+            @include font-label;
+            color: $strava-orange;
+            padding-bottom: 1rem;
+        }
+    }
+
+    &__users {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+        &-joined {
+            padding-right: 1rem;
+        }
+
+        &-pic {
+            background-color: $strava-grey;
+            border-radius: 50%;
+            height: 5rem;
+            width: 5rem;
+        }
+
+        &-name {
+            @include font-body;
+            padding-top: 0.5rem;
+            text-align: center
+        }
     }
 }
 

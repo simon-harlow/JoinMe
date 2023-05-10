@@ -46,7 +46,7 @@ const Profile = ({ userData }) => {
 
 	return (
 		<main className="profile">
-			<div className="profile__card">
+			<header className="profile__card">
 				<div className="profile__pic">
 					<img
 						src={userData.avatar_url}
@@ -87,8 +87,8 @@ const Profile = ({ userData }) => {
 						</a>
 					</div>
 				</div>
-			</div>
-			<div className="user-events__card">
+			</header>
+			<article className="user-events__card">
 				<div className="user-events__title">
 					<h2 className="user-events__title-text">
 						{userData.first_name} is Organizing!
@@ -107,8 +107,8 @@ const Profile = ({ userData }) => {
 						))}
 					</div>
 				)}
-			</div>
-			<div className="user-events__card">
+			</article>
+			<article className="user-events__card">
 				<div className="user-events__title">
 					<h2 className="user-events__title-text">
 						{userData.first_name} has Joined!
@@ -127,7 +127,7 @@ const Profile = ({ userData }) => {
 						))}
 					</div>
 				)}
-			</div>
+			</article>
 		</main>
 	);
 };
