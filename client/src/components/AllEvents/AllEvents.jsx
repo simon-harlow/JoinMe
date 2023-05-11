@@ -8,8 +8,11 @@ import EventList from '../EventList/EventList';
 import './AllEvents.scss';
 
 const AllEvents = () => {
+
   const [events, setEvents] = useState([]);
   const navigate = useNavigate();
+
+  const sortedEvents = events.sort((a, b) => a.event_time - b.event_time);
 
   useEffect(() => {
     axios

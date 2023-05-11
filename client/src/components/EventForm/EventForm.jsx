@@ -29,7 +29,7 @@ function EventForm() {
 
 	const navigate = useNavigate();
 	const formRedirect = () => navigate(`/events`);
-	const backPage = () => navigate(-1);
+	const backPage = () => navigate(`/events/${eventId}`);
 
 	useEffect(() => {
 		// Only get data if isEdit is true

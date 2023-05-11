@@ -119,8 +119,12 @@
             @include font-header;
         }
 
-        &-desc {
-            @include font-body;
+        &-edit-button {
+            margin-left: auto;
+        }
+
+        &-multi-button {
+            margin-left: 1rem;
         }
     }
 

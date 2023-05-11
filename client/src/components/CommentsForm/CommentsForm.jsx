@@ -52,7 +52,7 @@ export default function CommentsForm({ userData, eventData, addComment }) {
 					className="comments__form-input"
 					name="comment"
 					id="comment"
-					maxLength="100"
+					maxLength="200"
 					placeholder="Add a comment"
 					onChange={handleChangeComment}
 					value={comment}

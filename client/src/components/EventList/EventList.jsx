@@ -16,8 +16,8 @@ const EventList = ({ event, handleClickEvent }) => {
         </div>
         <div className="events-list__info">
           <div className="events-list__field">
-            <h6 className="events-list__field-name">Activity type:</h6>
-            <p className="events-list__field-value">{event.activity_type}</p>
+            <h6 className="events-list__field-name">Date & Time:</h6>
+            <p className="events-list__field-value">{new Date(event.event_time).toLocaleString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false })}</p>
           </div>
           <div className="events-list__field">
             <h6 className="events-list__field-name">Distance:</h6>

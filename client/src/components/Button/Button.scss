@@ -9,7 +9,9 @@
     cursor: pointer;
 
     &:hover, &:focus {
-        background-color: $strava-dark-orange;
+        &:hover {
+            transform: scale(1.1);
+        }
     }
 
     &-text {
