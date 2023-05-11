@@ -1,2 +1,73 @@
 @use '../../App.scss' as *;
 
+.comments{
+
+    &__form-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: stretch;
+        align-items: flex-start;
+        gap: 1rem;
+        width: 100%;
+        padding: 1rem 0 0 3rem;
+
+    }
+
+    &__profile-pic {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: $grey;
+    }
+
+    &__form {
+        width: 100%;
+    }
+
+    &__form-subhead {
+        @include font-label;
+        color: $strava-orange;
+        padding-bottom: .25rem;
+    }
+
+    &__form-input {
+        @include font-body;
+        height: 5rem;
+        width: 100%;
+        border-radius: 0.5rem;
+        border: 1px solid $grey;
+        padding: .75rem .75rem .75rem .75rem;
+        margin-bottom: 1rem;
+        resize: none;
+
+        &--name {
+            height: 3rem;
+        }
+
+        &:active, &:focus {
+            outline: none;
+            border: 1px solid $strava-orange;
+        }
+    }
+}
+
+// provides red border to either comment input box when they fail validation
+.form__error {
+    border: 1px solid #D22D2D;
+    animation: shakeTheBox 0.25s;
+}
+
+@keyframes shakeTheBox {
+    0% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

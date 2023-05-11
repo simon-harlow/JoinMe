@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import { API_URL } from '../Utils/Const';
+import { API_URL } from '../Utils/const';
 import EventList from '../EventList/EventList';
 import Location from "../../assets/icons/web/location_target.svg";
 import Strava from "../../assets/icons/web/strava_orange_icon.svg";

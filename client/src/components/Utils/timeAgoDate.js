@@ -18,7 +18,7 @@ function timeAgoDate(date) {
     } else if (timeDifference < 86400000) {
         timeAgo = `${Math.round(timeDifference / 3600000)} hours ago`;
     } else {
-        timeAgo = commentTime.toLocaleDateString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric'});
+        timeAgo = commentTime.toLocaleString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false });
     }
     return timeAgo;
 }

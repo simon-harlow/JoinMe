@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import './App.scss';
 
-import { API_URL } from "./components/Utils/Const";
+import { API_URL } from "./components/Utils/const";
 import Menu from './components/Menu/Menu';
 import AllEvents from './components/AllEvents/AllEvents';
 import EventForm from './components/EventForm/EventForm';

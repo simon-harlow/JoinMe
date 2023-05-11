@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import { API_URL } from '../Utils/Const';
+import { API_URL } from '../Utils/const';
 import Button from '../Button/Button';
 import EventList from '../EventList/EventList';
 import './AllEvents.scss';

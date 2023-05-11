@@ -239,26 +239,42 @@ const addUserToEvent = (req, res) => {
 
 const addComment = (req, res) => {
     console.log(req.body);
-    if (
-        isEmpty(req.body.comment)
-    ) {
+    if (isEmpty(req.body.comment)) {
         return res.status(400).send('One or more fields are invalid');
     }
 
     // Hard-coding my user_id until auth added in phase 2
     const user_id = '4780c8ef-6659-4f56-a6ea-cd0486a39f59';
 
-    const newComment = { 
+    const newComment = {
         id: uuid(),
         created_time: Date.now(),
         event_id: req.params.id,
         user_id,
-        ...req.body };
+        ...req.body
+    };
 
     knex('comments')
         .insert(newComment)
         .then(data => {
-            res.status(201).send(newComment);
+            // get user data to get avatar_url, first_name, and last_name for comments display
+            knex('users')
+                .select('avatar_url', 'first_name', 'last_name')
+                .where('id', user_id)
+                .first()
+                .then(user => {
+                    const commentData = {
+                        ...newComment,
+                        avatar_url: user.avatar_url,
+                        first_name: user.first_name,
+                        last_name: user.last_name
+                    };
+                    res.status(201).send(commentData);
+                })
+                .catch(err => {
+                    console.error(`Error fetching user data for comment ${newComment.id}: ${err}`);
+                    res.status(201).send(newComment);
+                });
         })
         .catch(err => res.status(400).send(`Error creating comment ${req.params.id} ${err}`));
 };

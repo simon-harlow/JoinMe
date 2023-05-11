@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ActivityIcon from '../Utils/ActivityIcons';
+import ActivityIcon from '../Utils/activityIcons';
 import './EventList.scss'
 
 const EventList = ({ event, handleClickEvent }) => {

@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from 'axios';
 
-import { API_URL } from '../Utils/Const';
-import timeAgoDate from "../Utils/TimeAgoDate";
-import ActivityIcon from '../Utils/ActivityIcons';
+import CommentsForm from '../CommentsForm/CommentsForm';
+import { API_URL } from "../Utils/const";
+import timeAgoDate from "../Utils/timeAgoDate";
+import ActivityIcon from '../Utils/activityIcons';
 import GoogleMap from '../../assets/images/google-map-placeholder.PNG';
 import Button from '../Button/Button';
+import Delete from '../../assets/icons/web/close.svg';
 import './EventDetails.scss'
 
 function EventDetails({ userData }) {
@@ -58,18 +60,48 @@ function EventDetails({ userData }) {
       });
   }, []);
 
-	useEffect(() => {
+  useEffect(() => {
+    if (userData) {
+      axios
+        .get(`${API_URL}/events/${eventId}/comments`)
+        .then((response) => {
+          console.log("comments data", response.data);
+          setCommentsData(response.data);
+        })
+        .catch((error) => console.log(error));
+    }
+  }, [userData, eventId]);
+
+  // handles when a comment is added from CommentsForm
+	const addComment = (comment) => {
 		axios
-      .get(`${API_URL}/events/${eventId}/comments`)
+      .get(`${API_URL}/events/${eventId}`)
 			.then((response) => {
-        console.log("comments data", response.data);
-				setCommentsData(response.data)
+				setCommentsData([...commentsData, comment])
 			})
 			.catch((error) => console.log(error));
-	}, []);
+	};
+
+  const deleteComment = (commentId) => {
+		axios
+      .delete(`${API_URL}/events/${eventId}/comments/${commentId}`)
+			.then((result) => {
+        setCommentsData(prev => {
+          const filteredComments = prev.filter(comment => {
+            return comment.id !== commentId;
+          });
+          return filteredComments;
+        });
+			})
+			.catch((error) => console.log(error));
+	};
 
   const numberOfComments = commentsData.length
-  const sortedComments = commentsData.sort((a, b) => b.timestamp - a.timestamp);
+  const sortedComments = commentsData.sort((a, b) => b.created_time - a.created_time);
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <main className="event-details">
@@ -184,37 +216,38 @@ function EventDetails({ userData }) {
         </article>
         <article className="event-details__card event-details__card--comments" >
           <div className="event-details__comments">
-              <h3 className="event-details__comments-title">Comments</h3>
-              {/* <CommentsForm
-              currentVideoData={currentVideoData}
-              addComment={addComment}
-              /> */}
+              <h3 className="event-details__comments-title">{numberOfComments} {numberOfComments === 1 ? 'Comment' : 'Comments'}:</h3>
+          </div>
+          <div className="event-details__comments-and-form">
             <div className="old-comments-container">
-                {sortedComments.map((comment) => (
+              {sortedComments.map((comment) => (
                 <div className="old-comments" id={comment.id} key={comment.id}>
-                    <div className="old-comments__left-container">
-                        <img className="old-comments__profile-pic" src={comment.avatar_url} alt={comment.first_name} />
+                  <div className="old-comments__left-container">
+                      <img className="old-comments__profile-pic" src={comment.avatar_url} alt={comment.first_name} />
+                  </div>
+                  <div className="old-comments__right-container">
+                    <div className="old-comments__title-container">
+                        <h6 className="old-comments__name">{comment.first_name} {comment.last_name}</h6>
+                        <p className="old-comments__date">{timeAgoDate(comment.created_time)}</p>
                     </div>
-                    <div className="old-comments__right-container">
-                        <div className="old-comments__title-container">
-                            <h5 className="old-comments__name">{comment.name}</h5>
-                            <p className="old-comments__date">{timeAgoDate(comment.created_time)}</p>
-                        </div>
-                        <div className="old-comments__text-container">
-                            <p className="old-comments__text">{comment.comment}</p>
-                        </div>
-                        <div className="old-comments__button-container">
-                            <button className="old-comments__button">
-                                <img src={""} alt="like icon"/>
-                            </button>
-                            <span className="old-comments__button-count">{comment.likes}</span>
-                            <button className="old-comments__button">
-                                <img src={""} alt="delete icon"/>
-                            </button>
-                        </div>
+                    <div className="old-comments__text-container">
+                        <p className="old-comments__text">{comment.comment}</p>
                     </div>
+                    <div className="old-comments__button-container">
+                        <button className="old-comments__button" onClick={() => deleteComment(comment.id)}>
+                            <img className="old-comments__button-icon" src={Delete} alt="delete icon"/>
+                        </button>
+                    </div>
+                  </div>
                 </div>
-            ))}
+              ))}
+            </div>
+            <div className="comments-form-container">
+              <CommentsForm 
+              userData={userData}
+              eventData={event}
+              addComment={addComment}
+              />
             </div>
           </div>
         </article>

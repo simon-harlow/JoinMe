@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-import { API_URL } from "../Utils/Const";
-import Activities from '../Utils/Activities';
+import { API_URL } from "../Utils/const";
+import Activities from '../Utils/activities';
 import DateTimePicker from 'react-datetime-picker';
 import Button from "../Button/Button";
 import 'react-datetime-picker/dist/DateTimePicker.css';

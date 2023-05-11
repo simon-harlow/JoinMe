@@ -75,7 +75,7 @@
             &:focus,
             &:active {
                 outline: none;
-                border: 2px solid $strava-orange;
+                border: 1px solid $strava-orange;
             }
 
             &--textarea {
@@ -92,26 +92,6 @@
         justify-content: flex-end;
         padding-top: 1rem;
         gap: 1rem;
-    }
-}
-
-// event
-.form__error {
-    border: 1px solid #D22D2D;
-    animation: shakeTheBox 0.25s;
-}
-
-@keyframes shakeTheBox {
-    0% {
-        transform: translateX(-10px);
-    }
-
-    50% {
-        transform: translateX(10px);
-    }
-
-    100% {
-        transform: translateX(0);
     }
 }
 
