@@ -101,8 +101,6 @@ const Profile = ({ userData }) => {
 				{userCreatedEvents.length === 0 ? (
 					<div className="profile__placeholder">
 						<p>No events organized</p>
-						<p>Click the Button to create an Event</p>
-						<Button text="Events" onClick={handleCreateClick}/>
 					</div>
 				) : (
 					<div className="user-events__list">
@@ -125,8 +123,6 @@ const Profile = ({ userData }) => {
 				{userJoinedEvents.length === 0 ? (
 					<div className="profile__placeholder">
 						<p>No events joined</p>
-						<p>Click the Button to find Events</p>
-						<Button text="Events" onClick={handleNoJoinClick}/>
 					</div>
 				) : (
 					<div className="user-events__list">

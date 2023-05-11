@@ -157,9 +157,8 @@ function EventForm() {
 
 
 						<label className="event-form__form-label" htmlFor="description">Description:</label>
-						<input
+						<textarea
 							className="event-form__form-input event-form__form-input--textarea"
-							as="textarea"
 							id="description"
 							name="description"
 							maxLength="200"
