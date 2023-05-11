@@ -83,6 +83,15 @@
             }
         }
     }
+
+    &__placeholder {
+        @include font-body;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+    }
 }
 
 // styling for the created-events card

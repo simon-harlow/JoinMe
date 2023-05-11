@@ -7,6 +7,7 @@ import EventList from '../EventList/EventList';
 import Location from "../../assets/icons/web/location_target.svg";
 import Strava from "../../assets/icons/web/strava_orange_icon.svg";
 import './Profile.scss';
+import Button from '../Button/Button';
 
 const Profile = ({ userData }) => {
 	const [userCreatedEvents, setUserCreatedEvents] = useState([]);
@@ -17,6 +18,9 @@ const Profile = ({ userData }) => {
 	const handleClickEvent = (eventId) => {
 		navigate(`/events/${eventId}`);
 	};
+
+	const handleNoJoinClick = () => navigate(`/events`)
+	const handleCreateClick = () => navigate(`/events/new`)
 
 	// to get events created by the the user
 	useEffect(() => {
@@ -95,7 +99,11 @@ const Profile = ({ userData }) => {
 					</h2>
 				</div>
 				{userCreatedEvents.length === 0 ? (
-					<p>No events created</p>
+					<div className="profile__placeholder">
+						<p>No events organized</p>
+						<p>Click the Button to create an Event</p>
+						<Button text="Events" onClick={handleCreateClick}/>
+					</div>
 				) : (
 					<div className="user-events__list">
 						{userCreatedEvents.map((event) => (
@@ -115,7 +123,11 @@ const Profile = ({ userData }) => {
 					</h2>
 				</div>
 				{userJoinedEvents.length === 0 ? (
-					<p>No events joined</p>
+					<div className="profile__placeholder">
+						<p>No events joined</p>
+						<p>Click the Button to find Events</p>
+						<Button text="Events" onClick={handleNoJoinClick}/>
+					</div>
 				) : (
 					<div className="user-events__list">
 						{userJoinedEvents.map((event) => (
