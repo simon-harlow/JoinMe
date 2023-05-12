@@ -102,17 +102,17 @@ body {
 }
 
 // App.jsx styling to force menu to left and rest of components to right
-.app-container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
+// .app-container {
+//   display: flex;
+//   flex-direction: row;
+//   height: 100vh;
 
-  .content-container {
-      width: 85%;
-      padding: 1rem;
-      margin-left: 15%;
-  }
-}
+//   .content-container {
+//       width: 85%;
+//       padding: 1rem;
+//       margin-left: 15%;
+//   }
+// }
 
 // form errors
 .form__error {

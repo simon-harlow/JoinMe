@@ -7,7 +7,7 @@ import { API_URL } from "../Utils/const";
 import timeAgoDate from "../Utils/timeAgoDate";
 import ActivityIcon from '../Utils/activityIcons';
 import GoogleMap from '../../assets/images/google-map-placeholder.PNG';
-import Modal from '../Modal/Modal';
+import DeleteModal from '../DeleteModal/DeleteModal';
 import Button from '../Button/Button';
 import Delete from '../../assets/icons/web/close.svg';
 import './EventDetails.scss'
@@ -196,7 +196,7 @@ function EventDetails({ userData }) {
               />
             )}
             {showModal && (
-              <Modal
+              <DeleteModal
               isOpen={showModal}
               onClose={handleCancelClick}
               handleConfirmDeleteClick={handleConfirmDeleteClick}
@@ -207,7 +207,7 @@ function EventDetails({ userData }) {
                   <Button text="Cancel" bgColor="#eeeeee" textColor="#000000" onClick={handleCancelClick} />
                   <Button text="Delete" onClick={handleConfirmDeleteClick} />
                 </div>
-              </Modal>
+              </DeleteModal>
             )}
           </div>
         </div>
@@ -278,7 +278,7 @@ function EventDetails({ userData }) {
           <div className="event-details__card--details-map">
             {/* This is a placeholder map for visuals.
             In a later phase I would ike to allow the user to add location and pin for start and end locations */}
-              <img className="event-details__map" src={GoogleMap}/>
+              <img className="event-details__map" src={GoogleMap} alt="google-map-vancouver"/>
           </div>
         </div>
         <div className="event-details__card--details-joined">

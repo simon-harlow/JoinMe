@@ -1,33 +1,36 @@
-import { useState } from 'react';
-import './Login.scss';
+import React from "react";
+import ReactDOM from "react-dom";
+import { useNavigate } from "react-router-dom"
 
-function Login() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+import JoinMeWhite from "../../assets/icons/web/joinme_logo_white.svg";
+import Button from "../../components/Button/Button";
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // TODO: implement login logic
-    };
+import "./Login.scss";
 
-    return (
-        <div className="login-page">
-            <div className="modal">
-                <h1>Login</h1>
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Username:
-                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-                    </label>
-                    <label>
-                        Password:
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    </label>
-                </form>
-                <button type="submit">Login with Strava</button>
-            </div>
-        </div>
-    );
-}
+
+const Login = ({ userData }) => {
+
+
+    const navigate = useNavigate();
+
+    const handleLogin = () => navigate(`/users/${userData.id}`)
+
+
+	return (
+		<div className="modal-container">
+			<div className="modal">
+				<div className="modal__header">
+					<h3 className="modal__title">Log In</h3>
+				</div>
+				<div className="modal__body">
+                    <p>Click below to login with your Strava account</p>
+                </div>
+                <div className="modal__buttons">
+                    <Button text="Login" onClick={handleLogin} />
+                </div>
+			</div>
+		</div>
+	);
+};
 
 export default Login;

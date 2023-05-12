@@ -29,24 +29,20 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="app-container">
         <Menu userData={userData} />
-        <main className="content-container">
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />
             {userData && (
               <Route path={`/users/${userData.id}`} element={<Profile userData={userData} />} />
             )}
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login userData={userData} />} />
             <Route path="/events" element={<AllEvents userData={userData}/>} />
             <Route path="/events/new" element={<EventForm userData={userData}/>} />
             <Route path="/events/edit/:eventId" element={<EventForm userData={userData}/>} />
             <Route path="/events/:eventId" element={<EventDetails userData={userData}/>} />
-            <Route path={`/users/:userId`} element={<Profile />} />
+            <Route path="/users/:userId" element={<Profile />} />
             <Route path="/*" element={<NotFound />} />
           </Routes>
-        </main>
-      </div>
     </BrowserRouter>
   );
 }

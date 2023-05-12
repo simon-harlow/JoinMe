@@ -2,17 +2,12 @@
 
 .menu {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 15%;
+    width: 100%;
     background-color: $strava-orange;
     padding: 2rem;
-    height: 100%;
     box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
 
     &__header {
@@ -24,7 +19,7 @@
 
     &__links {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: baseline;
         justify-content: flex-start;
     }
@@ -35,7 +30,6 @@
         color: $white;
         text-decoration: none;
         padding: 1rem;
-        margin-bottom: 1rem;
         border-radius: 0.5rem;
         transition: background-color 0.4s ease;
 
