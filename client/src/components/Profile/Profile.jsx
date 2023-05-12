@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
-import { API_URL } from '../Utils/const';
-import EventList from '../EventList/EventList';
+import { API_URL } from "../Utils/const";
+import EventList from "../EventList/EventList";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import Location from "../../assets/icons/web/location_target.svg";
 import Strava from "../../assets/icons/web/strava_orange_icon.svg";
-import './Profile.scss';
-import Button from '../Button/Button';
+import "./Profile.scss";
 
 const Profile = ({ userData }) => {
+
+	const { id } = useParams();
+	const [userProfileData, setUserProfileData] = useState("");
 	const [userCreatedEvents, setUserCreatedEvents] = useState([]);
 	const [userJoinedEvents, setUserJoinedEvents] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
 
 	const navigate = useNavigate();
 
@@ -19,41 +23,59 @@ const Profile = ({ userData }) => {
 		navigate(`/events/${eventId}`);
 	};
 
-	const handleNoJoinClick = () => navigate(`/events`)
-	const handleCreateClick = () => navigate(`/events/new`)
+	// if profile clicked on is not the logged in user passed down as userData in props, then get this users data
+	useEffect(() => {
+		setIsLoading(true);
+		if (id !== userData.id) {
+			axios
+				.get(`${API_URL}/users/${id}`)
+				.then((response) => {
+					setUserProfileData(response.data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+		else {
+			setUserProfileData(userData)
+		}
+	}, [id, userData.id]);
 
 	// to get events created by the the user
 	useEffect(() => {
-		axios
-			.get(`${API_URL}/events/users/${userData.id}`)
-			.then((response) => {
-				console.log(response.data);
-				setUserCreatedEvents(response.data);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, [userData.id]);
+		if (userProfileData.id) {
+			axios
+				.get(`${API_URL}/events/users/${userProfileData.id}`)
+				.then((response) => {
+					setUserCreatedEvents(response.data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, [userProfileData.id]);
 
 	// to get events joined by the user
 	useEffect(() => {
-		axios
-			.get(`${API_URL}/events/users/${userData.id}/joined`)
-			.then((response) => {
-				console.log(response.data);
-				setUserJoinedEvents(response.data);
-			})
-			.catch((error) => {
-				console.log(error);
-			});
-	}, [userData.id]);
+		if (userProfileData.id) {
+			axios
+				.get(`${API_URL}/events/users/${userProfileData.id}/joined`)
+				.then((response) => {
+					setUserJoinedEvents(response.data);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}, [userProfileData.id]);
 
 	return (
 		<main className="profile">
+			{isLoading && <LoadingSpinner />}
 			<header className="profile__card">
 				<div className="profile__pic">
 					<img
-						src={userData.avatar_url}
+						src={userProfileData.avatar_url}
 						alt="avatar"
 						className="profile__pic-img"
 					/>
@@ -61,7 +83,7 @@ const Profile = ({ userData }) => {
 				<div className="profile__details">
 					<div className="profile__name">
 						<h2 className="profile__name-text">
-							{userData.first_name} {userData.last_name}
+							{userProfileData.first_name} {userProfileData.last_name}
 						</h2>
 					</div>
 					<div className="profile__location">
@@ -71,8 +93,8 @@ const Profile = ({ userData }) => {
 							className="profile__location-icon"
 						/>
 						<p className="profile__location-text">
-							{userData.city}, {userData.state},{" "}
-							{userData.country}
+							{userProfileData.city}, {userProfileData.state},{" "}
+							{userProfileData.country}
 						</p>
 					</div>
 					<div className="profile__strava">
@@ -82,20 +104,23 @@ const Profile = ({ userData }) => {
 							className="profile__strava-icon"
 						/>
 						<a
-							href={userData.strava_url}
+							href={userProfileData.strava_url}
 							target="_blank"
 							rel="noopener noreferrer"
 							className="profile__strava-link"
 						>
-							{userData.first_name}'s Strava
+							{userProfileData.first_name}'s Strava
 						</a>
+					</div>
+					<div className="profile__bio">
+						<p className="profile__bio-text">{userProfileData.bio}</p>
 					</div>
 				</div>
 			</header>
 			<article className="user-events__card">
 				<div className="user-events__title">
 					<h2 className="user-events__title-text">
-						{userData.first_name} is Organizing!
+						{userProfileData.first_name} is Organizing!
 					</h2>
 				</div>
 				{userCreatedEvents.length === 0 ? (
@@ -117,7 +142,7 @@ const Profile = ({ userData }) => {
 			<article className="user-events__card">
 				<div className="user-events__title">
 					<h2 className="user-events__title-text">
-						{userData.first_name} has Joined!
+						{userProfileData.first_name} has Joined!
 					</h2>
 				</div>
 				{userJoinedEvents.length === 0 ? (

@@ -1,0 +1,32 @@
+@use '../../App.scss' as *;
+
+.not-found {
+    padding: 1rem 1rem 1rem 1rem;
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding-top: 5rem;
+        width: 100%;
+    }
+
+    &__gif {
+        height: 15rem;
+        border-radius: 50%;
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 2rem;
+    }
+
+    &__text {
+        @include font-body;
+    }
+}

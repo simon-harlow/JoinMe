@@ -34,7 +34,8 @@ body {
 ::-webkit-scrollbar-thumb {
   border-radius: 0.5rem;
   height: 0.5rem;
-  background-color: $grey;
+  width: 0.5rem;
+  background-color: $strava-grey;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -59,7 +60,6 @@ body {
 }
 
 // @Mixins
-
 // font styles
 @mixin font-header {
     font-size: 33px;
@@ -100,19 +100,6 @@ body {
     font-weight: 700;
     color: $white;
 }
-
-// App.jsx styling to force menu to left and rest of components to right
-// .app-container {
-//   display: flex;
-//   flex-direction: row;
-//   height: 100vh;
-
-//   .content-container {
-//       width: 85%;
-//       padding: 1rem;
-//       margin-left: 15%;
-//   }
-// }
 
 // form errors
 .form__error {

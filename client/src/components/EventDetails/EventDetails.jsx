@@ -171,6 +171,7 @@ function EventDetails({ userData }) {
         <div className="event-details__card--title-right">
           <div className="event-details__header">
             <h1 className="event-details__header-title">{event.title}</h1>
+            <p className="event-details__header-desc">{event.description}</p>
           </div>
           <div className="event-details__header-edit-button">
             {loggedInUserEvent && (
@@ -236,12 +237,6 @@ function EventDetails({ userData }) {
               </p>
             </div>
             </Link>
-          </div>
-          <div className="event-details__card--details-desc">
-            <div className="event-details__field">
-              <h6 className="event-details__field-name">Description:</h6>
-              <p className="event-details__field-value">{event.description}</p>
-            </div>
           </div>
           <div className="event-details__card--details-info">
             <div className="event-details__card--details-info-left">

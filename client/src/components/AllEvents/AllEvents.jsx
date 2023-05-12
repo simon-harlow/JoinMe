@@ -47,7 +47,7 @@ const AllEvents = () => {
       </header>
       <div className="all-events__event-card">
         <div className="all-events__list">
-            {events.map(event => (
+            {sortedEvents.map(event => (
               <EventList
               key={event.id}
               event={event}

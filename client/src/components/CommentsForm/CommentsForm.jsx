@@ -43,8 +43,8 @@ export default function CommentsForm({ userData, eventData, addComment }) {
 			<img
 				className="comments__profile-pic"
 				id="profile-pic"
-				src={userData.avatar_url}
-				alt={userData.first_name}
+				src={userData?.avatar_url}
+				alt={userData?.first_name}
 			/>
 			<form
 				className="comments__form" id="comments-form" onSubmit={handleSubmit}>

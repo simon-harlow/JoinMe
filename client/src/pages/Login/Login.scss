@@ -6,8 +6,10 @@ $background-images: (
     "image2.jpg",
     "image3.jpg",
     "image4.jpg",
-    "image5.jpg"
-);
+    "image5.jpg",
+    "image6.jpg",
+    "image7.jpg"
+); 
 
 @mixin random-background-image {
     $random-number: random(length($background-images));
@@ -33,7 +35,7 @@ $background-images: (
 .modal {
     position: relative;
     width: 50%;
-    max-width: 350px;
+    max-width: 400px;
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 0.5rem;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -59,17 +61,11 @@ $background-images: (
         padding: 2rem;
         color: $white;
         border-bottom: 1px solid $grey;
-    }
-
-    &__close {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-
-        &-icon {
-            height: 1.5rem;
-            width: 1.5rem;
-        }
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
     }
 
     &__buttons {

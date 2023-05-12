@@ -1,21 +1,34 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+
+import GIF from "../../assets/images/not_found.gif"
+import Button from '../../components/Button/Button';
+import "./NotFound.scss"
 
 
 function NotFound() {
+
+    const navigate = useNavigate();
+
+    const handleHomeClick = () => navigate(`/events`)
+
     return (
             <section className="not-found">
                 <div className="not-found__container">
-                    <p className="not-found__text">We cannot find what you are looking for.<br></br>Click the button below to return to the Homepage.</p>
-                    <NavLink to="/">
-                        <button className="not-found__button">
-                            Home
-                        </button>
-                    </NavLink>
+                    <div className="not-found__image">
+                        <img className="not-found__gif" src={GIF} alt="lost in mountains gif" />
+                    </div>
+                    <div className="not-found__content">
+                        <p className="not-found__text">We cannot find what you are looking for</p>
+                        <p className="not-found__text">Click the button below to go to the Events page</p>
+                    </div>
+                    <div>
+                        <Button text="Events" onClick={handleHomeClick}/>
+                    </div>
                 </div>
             </section>
     );
 }
 
 
-export default NotFound
+export default NotFound;

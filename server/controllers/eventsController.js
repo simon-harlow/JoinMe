@@ -105,7 +105,7 @@ const allEventsByUser = (req, res) => {
         .where({ 'events.created_by': req.params.userId })
         .then(data => {
             if (data.length === 0) {
-                return res.status(404).send(`No records found`);
+                return res.status(204).send(`User: ${req.params.userId} has not created any events`);
             }
             res.status(200).json(data);
         })
@@ -140,7 +140,7 @@ const allEventsUserJoined = (req, res) => {
         .havingRaw('users_joined LIKE ?', `%${req.params.userId}%`)
         .then(data => {
             if (data.length === 0) {
-                return res.status(404).send(`No records found`);
+                return res.status(204).send(`User: ${req.params.userId} has not joined any events`);
             }
             res.status(200).json(data);
         })

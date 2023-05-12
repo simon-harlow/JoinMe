@@ -1,14 +1,18 @@
 @use '../../App.scss' as *;
 
+.menu-container {
+    background-color: $strava-orange;
+}
+
 .menu {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    width: 100%;
+    width: 80rem;
+    margin: 0 auto 0 auto;
     background-color: $strava-orange;
-    padding: 2rem;
-    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 1rem;
 
     &__header {
         display: flex;
@@ -29,15 +33,15 @@
         align-items: center;
         color: $white;
         text-decoration: none;
-        padding: 1rem;
+        padding: 1rem 0.5rem;
         border-radius: 0.5rem;
         transition: background-color 0.4s ease;
 
-        &--active {
+        &:hover {
             background-color: $strava-dark-orange;
         }
 
-        &:hover {
+        &--active {
             background-color: $strava-dark-orange;
         }
     }
