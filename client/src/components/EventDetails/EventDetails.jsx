@@ -33,6 +33,7 @@ function EventDetails({ userData }) {
       .get(`${API_URL}/events/${eventId}`)
       .then(response => {
         setEvent(response.data);
+        console.log(response.data);
         if (userData && response.data.created_by === userData.id) {
           setLoggedInUserEvent(true);
           setEventUserData(userData);
@@ -158,6 +159,9 @@ function EventDetails({ userData }) {
     setShowModal(false);
   };
 
+console.log("event data",event)
+
+  // HTML Return
   return (
     <main className="event-details">
 
@@ -258,7 +262,7 @@ function EventDetails({ userData }) {
             <div className="event-details__card--details-info-right">
               <div className="event-details__field">
                 <h6 className="event-details__field-name">Intensity Level:</h6>
-                <p className="event-details__field-value">{event.skill_level}</p>
+                <p className="event-details__field-value">{event.intensity_level}</p>
               </div>
               <div className="event-details__field">
                 <h6 className="event-details__field-name">Start Location:</h6>
@@ -271,8 +275,7 @@ function EventDetails({ userData }) {
             </div>
           </div>
           <div className="event-details__card--details-map">
-              <Map />
-              {/* <img className="event-details__map" src={GoogleMap} alt="google-map-vancouver"/> */}
+            {event && event.start_lat && event.start_lon ? <Map lat={event.start_lat} lon={event.start_lon} popupText={event.start_location} /> : <p>Loading map data...</p>}
           </div>
         </div>
         <div className="event-details__card--details-joined">

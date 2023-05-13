@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DateTimePicker from 'react-datetime-picker';
-import { LoadScript } from '@react-google-maps/api';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import axios from "axios";
 
-import { API_URL, googleMapsAPIKey } from "../Utils/const";
+import { API_URL} from "../Utils/const";
 import Activities from '../Utils/activities';
 import Button from "../Button/Button";
 
@@ -23,14 +22,14 @@ function EventForm() {
 	const [event_time, setEventTime] = useState("");
 	const [activity_type, setActivityType] = useState("");
 	const [start_location, setStartLocation] = useState("");
-	const [startLat, setStartLat] = useState("")
-	const [startLng, setStartLng] = useState("")
+	const [start_lat, setStartLat] = useState("")
+	const [start_lon, setStartLon] = useState("")
 	const [end_location, setEndLocation] = useState("");
-	const [endLat, setEndLat] = useState("")
-	const [endLng, setEndLng] = useState("")
+	const [end_lat, setEndLat] = useState("")
+	const [end_lon, setEndLon] = useState("")
 	const [event_duration, setEventDuration] = useState("");
 	const [event_distance, setEventDistance] = useState("");
-	const [skill_level, setSkillLevel] = useState("");
+	const [intensity_level, setIntensityLevel] = useState("");
 
 	const [formErrors, setFormErrors] = useState();
 
@@ -50,10 +49,14 @@ function EventForm() {
 					setActivityType(data.activity_type);
 					setEventTime(data.event_time);
 					setStartLocation(data.start_location);
+					setStartLat(data.start_lat);
+					setStartLon(data.start_lon);
 					setEndLocation(data.end_location);
+					setEndLat(data.end_lat);
+					setEndLon(data.end_lon);
 					setEventDistance(data.event_distance);
 					setEventDuration(data.event_duration);
-					setSkillLevel(data.skill_level)
+					setIntensityLevel(data.intensity_level)
 				})
 				.catch((error) => {
 					console.error("Error fetching event data:", error);
@@ -67,9 +70,7 @@ function EventForm() {
 		const latLng = await getLatLng(results[0]);
 		setStartLocation(value);
 		setStartLat(latLng.lat);
-		setStartLng(latLng.lng);
-		console.log(start_location);
-		console.log({startLat, startLng});
+		setStartLon(latLng.lng);
 	};
 
 	const handleEndSelect = async (value) => {
@@ -77,9 +78,7 @@ function EventForm() {
 		const latLng = await getLatLng(results[0]);
 		setEndLocation(value);
 		setEndLat(latLng.lat);
-		setEndLng(latLng.lng);
-		console.log(end_location);
-		console.log({endLat, endLng});
+		setEndLon(latLng.lng);
 	};
 
 	const isFormValid = () => {
@@ -109,7 +108,7 @@ function EventForm() {
 		if (!event_distance) {
 			errors.push("Distance is required");
 		}
-		if (!skill_level.trim()) {
+		if (!intensity_level.trim()) {
 			errors.push("Intensity Level is required");
 		}
 		return errors;
@@ -127,10 +126,14 @@ function EventForm() {
 				activity_type,
 				event_time,
 				start_location,
+				start_lat,
+				start_lon,
 				end_location,
+				end_lat,
+				end_lon,
 				event_duration,
 				event_distance,
-				skill_level,
+				intensity_level,
 			};
 
 			const method = isEdit ? "put" : "post";
@@ -146,10 +149,14 @@ function EventForm() {
 					setActivityType("");
 					setEventTime("");
 					setStartLocation("");
+					setStartLat("");
+					setStartLon("");
 					setEndLocation("");
+					setEndLat("");
+					setEndLon("");
 					setEventDuration("");
 					setEventDistance("");
-					setSkillLevel("");
+					setIntensityLevel("");
 					formRedirect();
 				})
 				.catch((error) => {
@@ -345,13 +352,13 @@ function EventForm() {
 							onChange={(event) => setEventDistance(event.target.value)}
 						/>
 
-						<label className="event-form__form-label" htmlFor="skill_level">Intensity Level:</label>
+						<label className="event-form__form-label" htmlFor="intensity_level">Intensity Level:</label>
 						<select
 							className="event-form__form-select"
-							id="skill_level"
-							name="skill_level"
-							value={skill_level}
-							onChange={(event) => setSkillLevel(event.target.value)}
+							id="intensity_level"
+							name="intensity_level"
+							value={intensity_level}
+							onChange={(event) => setIntensityLevel(event.target.value)}
 						>
 							<option value="" disabled hidden>
 								{isEdit ? "Please select an intensity level" : "Choose an intensity level"}

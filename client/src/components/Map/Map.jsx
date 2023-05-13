@@ -16,14 +16,15 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 // if lat, lon and popupText not passed as props then default to Vancouver
-function Map({ lat = 49.2827, lon = -123.1207, popupText = "Vancouver" }) {
+function Map({ lat, lon, popupText }) {
+	console.log(lat, lon, popupText);
 	const position = [lat, lon];
 
 	return (
-		<MapContainer className="map" center={position} zoom={13}>
+		<MapContainer className="map" center={position} zoom={13} >
 			<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 			<Marker position={position}>
-				<Popup>
+				<Popup isOpen={true}>
 					{popupText}
 				</Popup>
 			</Marker>

@@ -28,8 +28,8 @@ const EventList = ({ event, handleClickEvent }) => {
             <p className="events-list__field-value">{event.event_duration}</p>
           </div>
           <div className="events-list__field">
-            <h6 className="events-list__field-name">Skill Level:</h6>
-            <p className="events-list__field-value">{event.skill_level}</p>
+            <h6 className="events-list__field-name">Intensity Level:</h6>
+            <p className="events-list__field-value">{event.intensity_level}</p>
           </div>
           <div className="events-list__field">
             <h6 className="events-list__field-name">Start Location:</h6>

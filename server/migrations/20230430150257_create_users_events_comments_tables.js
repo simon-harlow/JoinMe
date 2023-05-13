@@ -30,11 +30,11 @@ exports.up = function (knex) {
             table.bigint('event_time').notNullable();
             table.string('activity_type').notNullable();
             table.string('start_location').notNullable();
-            table.float('start_lat').notNullable();
-            table.float('start_lon').notNullable();
+            table.float('start_lat', 8, 6).notNullable();
+            table.float('start_lon', 9, 6).notNullable();
             table.string('end_location').notNullable();
-            table.float('end_lat').notNullable();
-            table.float('end_lon').notNullable();
+            table.float('end_lat', 8, 6).notNullable();
+            table.float('end_lon', 9, 6).notNullable();
             table.string('event_duration').notNullable();
             table.integer('event_distance').notNullable();
             table.string('intensity_level').notNullable();
