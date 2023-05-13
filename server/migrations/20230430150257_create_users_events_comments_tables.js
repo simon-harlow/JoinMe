@@ -30,17 +30,21 @@ exports.up = function (knex) {
             table.bigint('event_time').notNullable();
             table.string('activity_type').notNullable();
             table.string('start_location').notNullable();
+            table.float('start_lat').notNullable();
+            table.float('start_lon').notNullable();
             table.string('end_location').notNullable();
+            table.float('end_lat').notNullable();
+            table.float('end_lon').notNullable();
             table.string('event_duration').notNullable();
             table.integer('event_distance').notNullable();
-            table.string('skill_level').notNullable();
+            table.string('intensity_level').notNullable();
             table.string('gpx_url').notNullable();
             table.string('repeats').notNullable();
             table.string('title').notNullable();
             table.string('description').notNullable();
         }),
 
-        // Create events users table
+        // Create event users table
         knex.schema.createTable('event_users', function(table) {
             table.increments('id').primary();
             table.uuid('user_id').references('users.id').onDelete('CASCADE');

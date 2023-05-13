@@ -18,11 +18,15 @@ const singleEvent = (req, res) => {
             'events.created_time', 
             'events.event_time', 
             'events.activity_type', 
-            'events.start_location', 
-            'events.end_location', 
+            'events.start_location',
+            'events.start_lat',
+            'events.start_lon',  
+            'events.end_location',
+            'events.end_lat',
+            'events.end_lon',  
             'events.event_duration', 
             'events.event_distance',
-            'events.skill_level', 
+            'events.intensity_level', 
             'events.gpx_url', 
             'events.repeats',
             'events.title',
@@ -31,7 +35,7 @@ const singleEvent = (req, res) => {
         )
         .leftJoin('event_users', 'events.id', 'event_users.event_id')
         .leftJoin('users AS user', 'event_users.user_id', 'user.id')
-        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.event_distance', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.title', 'events.description')
+        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.start_lat', 'events.start_lon', 'events.end_location', 'events.event_duration', 'events.end_lat', 'events.end_lon', 'events.event_distance', 'events.intensity_level', 'events.gpx_url', 'events.repeats', 'events.title', 'events.description')
         .where({ 'events.id': req.params.id })
         .then(data => {
             if (data.length === 0) {
@@ -53,11 +57,15 @@ const allEvents = (req, res) => {
             'events.created_time', 
             'events.event_time', 
             'events.activity_type', 
-            'events.start_location', 
-            'events.end_location', 
+            'events.start_location',
+            'events.start_lat',
+            'events.start_lon',  
+            'events.end_location',
+            'events.end_lat',
+            'events.end_lon',  
             'events.event_duration', 
             'events.event_distance',
-            'events.skill_level', 
+            'events.intensity_level', 
             'events.gpx_url', 
             'events.repeats',
             'events.title',
@@ -67,7 +75,7 @@ const allEvents = (req, res) => {
         .leftJoin('users', 'events.created_by', 'users.id')
         .leftJoin('event_users', 'events.id', 'event_users.event_id')
         .leftJoin('users AS user', 'event_users.user_id', 'user.id')
-        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.event_distance', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.title', 'events.description')
+        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.start_lat', 'events.start_lon', 'events.end_location', 'events.event_duration', 'events.end_lat', 'events.end_lon', 'events.event_distance', 'events.intensity_level', 'events.gpx_url', 'events.repeats', 'events.title', 'events.description')
         .then(data => {
             if (data.length === 0) {
                 return res.status(404).send(`No records found`);
@@ -87,13 +95,17 @@ const allEventsByUser = (req, res) => {
             'events.created_time', 
             'events.event_time', 
             'events.activity_type', 
-            'events.start_location', 
-            'events.end_location', 
-            'events.event_duration',
+            'events.start_location',
+            'events.start_lat',
+            'events.start_lon',  
+            'events.end_location',
+            'events.end_lat',
+            'events.end_lon',  
+            'events.event_duration', 
             'events.event_distance',
-            'events.skill_level', 
+            'events.intensity_level', 
             'events.gpx_url', 
-            'events.repeats', 
+            'events.repeats',
             'events.title',
             'events.description', 
             knex.raw('GROUP_CONCAT(DISTINCT CONCAT(event_users.user_id, ":", user.first_name, " ", user.last_name)) AS users_joined')
@@ -101,7 +113,7 @@ const allEventsByUser = (req, res) => {
         .leftJoin('users', 'events.created_by', 'users.id')
         .leftJoin('event_users', 'events.id', 'event_users.event_id')
         .leftJoin('users AS user', 'event_users.user_id', 'user.id')
-        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.description')
+        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.start_lat', 'events.start_lon', 'events.end_location', 'events.event_duration', 'events.end_lat', 'events.end_lon', 'events.event_distance', 'events.intensity_level', 'events.gpx_url', 'events.repeats', 'events.title', 'events.description')
         .where({ 'events.created_by': req.params.userId })
         .then(data => {
             if (data.length === 0) {
@@ -122,13 +134,17 @@ const allEventsUserJoined = (req, res) => {
             'events.created_time', 
             'events.event_time', 
             'events.activity_type', 
-            'events.start_location', 
-            'events.end_location', 
-            'events.event_duration',
+            'events.start_location',
+            'events.start_lat',
+            'events.start_lon',  
+            'events.end_location',
+            'events.end_lat',
+            'events.end_lon',  
+            'events.event_duration', 
             'events.event_distance',
-            'events.skill_level', 
+            'events.intensity_level', 
             'events.gpx_url', 
-            'events.repeats', 
+            'events.repeats',
             'events.title',
             'events.description', 
             knex.raw('GROUP_CONCAT(DISTINCT CONCAT(event_users.user_id, ":", user.first_name, " ", user.last_name)) AS users_joined')
@@ -136,7 +152,7 @@ const allEventsUserJoined = (req, res) => {
         .leftJoin('users', 'events.created_by', 'users.id')
         .leftJoin('event_users', 'events.id', 'event_users.event_id')
         .leftJoin('users AS user', 'event_users.user_id', 'user.id')
-        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.end_location', 'events.event_duration', 'events.skill_level', 'events.gpx_url', 'events.repeats', 'events.description')
+        .groupBy('events.id', 'events.created_by', 'users.first_name', 'users.last_name', 'events.created_time', 'events.event_time', 'events.activity_type', 'events.start_location', 'events.start_lat', 'events.start_lon', 'events.end_location', 'events.event_duration', 'events.end_lat', 'events.end_lon', 'events.event_distance', 'events.intensity_level', 'events.gpx_url', 'events.repeats', 'events.title', 'events.description')
         .havingRaw('users_joined LIKE ?', `%${req.params.userId}%`)
         .then(data => {
             if (data.length === 0) {
@@ -177,10 +193,14 @@ const addEvent = (req, res) => {
     if (
         isEmpty(req.body.event_time) ||
         isEmpty(req.body.start_location) ||
+        isEmpty(req.body.start_lat) ||
+        isEmpty(req.body.start_lon) ||
         isEmpty(req.body.end_location) ||
+        isEmpty(req.body.end_lat) ||
+        isEmpty(req.body.end_lon) ||
         isEmpty(req.body.event_duration) ||
         isEmpty(req.body.event_distance) ||
-        isEmpty(req.body.skill_level) ||
+        isEmpty(req.body.intensity_level) ||
         isEmpty(req.body.title) ||
         isEmpty(req.body.description)
     ) {
@@ -285,10 +305,14 @@ const updateEvent = (req, res) => {
     if (
         isEmpty(req.body.event_time) ||
         isEmpty(req.body.start_location) ||
+        isEmpty(req.body.start_lat) ||
+        isEmpty(req.body.start_lon) ||
         isEmpty(req.body.end_location) ||
+        isEmpty(req.body.end_lat) ||
+        isEmpty(req.body.end_lon) ||
         isEmpty(req.body.event_duration) ||
         isEmpty(req.body.event_distance) ||
-        isEmpty(req.body.skill_level) ||
+        isEmpty(req.body.intensity_level) ||
         isEmpty(req.body.title) ||
         isEmpty(req.body.description)
     ) {
