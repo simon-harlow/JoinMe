@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import DateTimePicker from 'react-datetime-picker';
+import { LoadScript } from '@react-google-maps/api';
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import axios from "axios";
 
-import { API_URL } from "../Utils/const";
+import { API_URL, googleMapsAPIKey } from "../Utils/const";
 import Activities from '../Utils/activities';
-import DateTimePicker from 'react-datetime-picker';
 import Button from "../Button/Button";
+
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import "./EventForm.scss";
@@ -20,7 +23,11 @@ function EventForm() {
 	const [event_time, setEventTime] = useState("");
 	const [activity_type, setActivityType] = useState("");
 	const [start_location, setStartLocation] = useState("");
+	const [startLat, setStartLat] = useState("")
+	const [startLng, setStartLng] = useState("")
 	const [end_location, setEndLocation] = useState("");
+	const [endLat, setEndLat] = useState("")
+	const [endLng, setEndLng] = useState("")
 	const [event_duration, setEventDuration] = useState("");
 	const [event_distance, setEventDistance] = useState("");
 	const [skill_level, setSkillLevel] = useState("");
@@ -53,6 +60,27 @@ function EventForm() {
 				});
 		}
 	}, [isEdit, eventId]);
+
+
+	const handleStartSelect = async (value) => {
+		const results = await geocodeByAddress(value);
+		const latLng = await getLatLng(results[0]);
+		setStartLocation(value);
+		setStartLat(latLng.lat);
+		setStartLng(latLng.lng);
+		console.log(start_location);
+		console.log({startLat, startLng});
+	};
+
+	const handleEndSelect = async (value) => {
+		const results = await geocodeByAddress(value);
+		const latLng = await getLatLng(results[0]);
+		setEndLocation(value);
+		setEndLat(latLng.lat);
+		setEndLng(latLng.lng);
+		console.log(end_location);
+		console.log({endLat, endLng});
+	};
 
 	const isFormValid = () => {
 		const errors = [];
@@ -151,6 +179,7 @@ function EventForm() {
 							id="title"
 							name="title"
 							maxLength="50"
+							placeholder="Name your event..."
 							value={title}
 							onChange={(event) => setTitle(event.target.value)}
 						/>
@@ -162,6 +191,7 @@ function EventForm() {
 							id="description"
 							name="description"
 							maxLength="200"
+							placeholder="Describe the event and mention any useful info that others should know..."
 							value={description}
 							onChange={(event) => setDescription(event.target.value)}
 						/>
@@ -201,18 +231,87 @@ function EventForm() {
 						</div>
 						<div className="event-form__form-right">
 						<label className="event-form__form-label" htmlFor="start_location">Start Location:</label>
-						<input
-							className="event-form__form-input"
-							type="text"
+						<PlacesAutocomplete
+							value={start_location}
+							onChange={setStartLocation}
+							onSelect={handleStartSelect}
 							id="start_location"
 							name="start_location"
-							maxLength="30"
-							value={start_location}
-							onChange={(event) => setStartLocation(event.target.value)}
-						/>
+							>
+							{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+								<>
+								<input 
+									{...getInputProps({
+									placeholder: "Start typing and pick a location from the list...",
+									className: "event-form__form-input",
+									})}
+								/>
+								<div className="autocomplete-dropdown-container" >
+									{loading && <div>Loading...</div>}
+									{suggestions.map((suggestion) => {
+									const className = suggestion.active
+										? "suggestion-item--active"
+										: "suggestion-item";
+									const style = suggestion.active
+										? { backgroundColor: "#f7f7f7", cursor: "pointer" }
+										: { backgroundColor: "transparent", cursor: "pointer" };
+									return (
+										<div
+										{...getSuggestionItemProps(suggestion, {
+											className,
+											style,
+										})}
+										>
+										<span>{suggestion.description}</span>
+										</div>
+									);
+									})}
+								</div>
+								</>
+							)}
+						</PlacesAutocomplete>
 
 						<label className="event-form__form-label" htmlFor="end_location">End Location:</label>
-						<input
+						<PlacesAutocomplete
+							value={end_location}
+							onChange={setEndLocation}
+							onSelect={handleEndSelect}
+							id="end_location"
+							name="end_location"
+							>
+							{({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+								<>
+								<input 
+									{...getInputProps({
+									placeholder: "Start typing and pick a location from the list...",
+									className: "event-form__form-input",
+									})}
+								/>
+								<div className="autocomplete-dropdown-container" >
+									{loading && <div>Loading...</div>}
+									{suggestions.map((suggestion) => {
+									const className = suggestion.active
+										? "suggestion-item--active"
+										: "suggestion-item";
+									const style = suggestion.active
+										? { backgroundColor: "#f7f7f7", cursor: "pointer" }
+										: { backgroundColor: "transparent", cursor: "pointer" };
+									return (
+										<div
+										{...getSuggestionItemProps(suggestion, {
+											className,
+											style,
+										})}
+										>
+										<span>{suggestion.description}</span>
+										</div>
+									);
+									})}
+								</div>
+								</>
+							)}
+						</PlacesAutocomplete>
+						{/* <input
 							className="event-form__form-input"
 							type="text"
 							id="end_location"
@@ -220,7 +319,7 @@ function EventForm() {
 							maxLength="30"
 							value={end_location}
 							onChange={(event) => setEndLocation(event.target.value)}
-						/>
+						/> */}
 
 						<label className="event-form__form-label" htmlFor="event_duration">Duration:</label>
 						<input
@@ -229,6 +328,7 @@ function EventForm() {
 							id="event_duration"
 							name="event_duration"
 							maxLength="10"
+							placeholder="30 mins or 4 hours etc..."
 							value={event_duration}
 							onChange={(event) => setEventDuration(event.target.value)}
 						/>
@@ -239,8 +339,9 @@ function EventForm() {
 							type="text"
 							id="event_distance"
 							name="event_distance"
+							maxLength="3"
+							placeholder="Number of KMs..."
 							value={event_distance}
-							maxLength="4"
 							onChange={(event) => setEventDistance(event.target.value)}
 						/>
 

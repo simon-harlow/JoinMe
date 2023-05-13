@@ -6,7 +6,7 @@ import CommentsForm from '../CommentsForm/CommentsForm';
 import { API_URL } from "../Utils/const";
 import timeAgoDate from "../Utils/timeAgoDate";
 import ActivityIcon from '../Utils/activityIcons';
-import GoogleMap from '../../assets/images/google-map-placeholder.PNG';
+import Map from '../Map/Map';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import Button from '../Button/Button';
 import Delete from '../../assets/icons/web/close.svg';
@@ -271,9 +271,8 @@ function EventDetails({ userData }) {
             </div>
           </div>
           <div className="event-details__card--details-map">
-            {/* This is a placeholder map for visuals.
-            In a later phase I would ike to allow the user to add location and pin for start and end locations */}
-              <img className="event-details__map" src={GoogleMap} alt="google-map-vancouver"/>
+              <Map />
+              {/* <img className="event-details__map" src={GoogleMap} alt="google-map-vancouver"/> */}
           </div>
         </div>
         <div className="event-details__card--details-joined">

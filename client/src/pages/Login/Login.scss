@@ -9,7 +9,7 @@ $background-images: (
     "image5.jpg",
     "image6.jpg",
     "image7.jpg"
-); 
+);    
 
 @mixin random-background-image {
     $random-number: random(length($background-images));
@@ -17,7 +17,7 @@ $background-images: (
 }
 
 // styling for the modal
-.modal-container {
+.login-modal-container {
     position: fixed;
     top: 0;
     left: 0;
@@ -27,12 +27,12 @@ $background-images: (
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
-    z-index: 999;
+    z-index: 1000;
     @include random-background-image;
     background-size: cover;
 }
 
-.modal {
+.login-modal {
     position: relative;
     width: 50%;
     max-width: 400px;

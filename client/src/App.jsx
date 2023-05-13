@@ -12,7 +12,6 @@ import EventDetails from './components/EventDetails/EventDetails';
 import Profile from './components/Profile/Profile';
 import Login from './pages/Login/Login';
 import NotFound from './pages/NotFound/NotFound';
-import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 
 function App() {
   const [userData, setUserData] = useState(null);
