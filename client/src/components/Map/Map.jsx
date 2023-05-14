@@ -5,17 +5,18 @@ import "leaflet/dist/leaflet.css";
 import "./Map.scss";
 
 // fix for missing default icon
-import icon from 'leaflet/dist/images/marker-icon.png';
+import icon from '../../assets/icons/web/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
 let DefaultIcon = L.icon({
     iconUrl: icon,
-    shadowUrl: iconShadow
+    shadowUrl: iconShadow,
+    iconSize: [25, 41], // set the size of the icon
+    iconAnchor: [12, 41] // set the anchor point to the bottom center of the icon
 });
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-// if lat, lon and popupText not passed as props then default to Vancouver
 function Map({ lat, lon, popupText }) {
 	console.log(lat, lon, popupText);
 	const position = [lat, lon];
@@ -23,7 +24,7 @@ function Map({ lat, lon, popupText }) {
 	return (
 		<MapContainer className="map" center={position} zoom={13} >
 			<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-			<Marker position={position}>
+			<Marker position={position} icon={DefaultIcon}>
 				<Popup isOpen={true}>
 					{popupText}
 				</Popup>

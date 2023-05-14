@@ -45,16 +45,7 @@
     }
 
     &__banner-create {
-
-        &-button {
-            @include font-section-header;
-            padding: 0.5rem;
-            background-color: $strava-orange;
-            color: $white;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-        }
+        width: auto;
     }
 
     &__event-card {

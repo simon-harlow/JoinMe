@@ -7,6 +7,7 @@ import { API_URL } from "../Utils/const";
 import timeAgoDate from "../Utils/timeAgoDate";
 import ActivityIcon from '../Utils/activityIcons';
 import Map from '../Map/Map';
+import GpxMap from '../GpxMap/GpxMap';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import Button from '../Button/Button';
 import Delete from '../../assets/icons/web/close.svg';
@@ -275,7 +276,13 @@ console.log("event data",event)
             </div>
           </div>
           <div className="event-details__card--details-map">
-            {event && event.start_lat && event.start_lon ? <Map lat={event.start_lat} lon={event.start_lon} popupText={event.start_location} /> : <p>Loading map data...</p>}
+          {event && event.start_lat && event.start_lon ?
+            (event.gpx_url !== '' ? 
+              <GpxMap event={event} /> : 
+              <Map lat={event.start_lat} lon={event.start_lon} popupText={event.start_location} />
+          ) : 
+            <p>Loading map data...</p>
+          }
           </div>
         </div>
         <div className="event-details__card--details-joined">

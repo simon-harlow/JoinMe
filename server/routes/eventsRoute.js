@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const fs = require('fs');
+const GPXParser = require('gpxparser');
 const eventsController = require('../controllers/eventsController')
+
 
 router
     .route('/')
@@ -39,5 +42,16 @@ router
     .route('/:id/comments/:commentId')
     .delete(eventsController.deleteComment);
 
+// handle requests to get and parse GPX data files
+router
+    .get('/:id/gpx/:filename', (req, res) => {
+        const { filename } = req.params;
+        const gpxData = fs.readFileSync(`public/gpx/${filename}.gpx`, 'utf8');
+        const gpx = new GPXParser();
+        gpx.parse(gpxData);
+
+        const points = gpx.tracks[0].points;
+        res.send(points);
+    });
 
 module.exports = router;

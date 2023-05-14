@@ -187,6 +187,7 @@ const eventComments = (req, res) => {
         });
 };
 
+
 // POST Requests
 const addEvent = (req, res) => {
     console.log(req.body);

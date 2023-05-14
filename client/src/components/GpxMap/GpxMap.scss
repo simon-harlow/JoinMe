@@ -1,0 +1,14 @@
+@use '../../App.scss' as *;
+
+.gpx_map {
+    height: 250px;
+    width: 100%;
+}
+
+.leaflet-container {
+    border-radius: 0.5rem;
+}
+
+.leaflet-control-attribution {
+    display: none;
+}

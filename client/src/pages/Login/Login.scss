@@ -9,7 +9,7 @@ $background-images: (
     "image5.jpg",
     "image6.jpg",
     "image7.jpg"
-);    
+);   
 
 @mixin random-background-image {
     $random-number: random(length($background-images));

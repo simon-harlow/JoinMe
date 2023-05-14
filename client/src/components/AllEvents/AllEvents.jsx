@@ -42,7 +42,7 @@ const AllEvents = () => {
           {/* TODO: create search input form and back-end handler */}
         </form>
         <div className="all-events__banner-create">
-        <Button onClick={handleClickCreateEvent} text="Create Event" />
+          <Button onClick={handleClickCreateEvent} text="Create Event" />
         </div>
       </header>
       <div className="all-events__event-card">
