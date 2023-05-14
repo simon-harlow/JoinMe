@@ -18,7 +18,7 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 function Map({ lat, lon, popupText }) {
-	console.log(lat, lon, popupText);
+
 	const position = [lat, lon];
 
 	return (

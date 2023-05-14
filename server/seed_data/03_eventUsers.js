@@ -8,6 +8,10 @@ module.exports = [
         event_id: "0123e8db-2999-40cb-91e1-1cd9b5ab7482",
     },
     {
+        user_id: "a78b7a65-9098-46ab-a4cc-15f92fe7519f",
+        event_id: "0123e8db-2999-40cb-91e1-1cd9b5ab7482",
+    },
+    {
         user_id: "4780c8ef-6659-4f56-a6ea-cd0486a39f59",
         event_id: "f8af3412-02a4-4cd1-abbe-9d86a725b794",
     },
@@ -73,6 +77,10 @@ module.exports = [
     },
     {
         user_id: "36650959-e524-4957-8ae1-18ddec1b2145",
+        event_id: "f8af3412-02a4-4cd1-abbe-9d86a725b794",
+    },
+    {
+        user_id: "95e73433-602c-42d9-8269-10189ba763b7",
         event_id: "f8af3412-02a4-4cd1-abbe-9d86a725b794",
     },
 ];

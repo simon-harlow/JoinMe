@@ -11,7 +11,7 @@ app.use(express.json());
 
 // helpful console output for each interaction, good for auditing purposes
 app.use((req, res, next) => {
-    console.log(`[${req.method}] Request for path "${req.path}" at ${new Date().toLocaleString('en-US')}`);
+    console.log(`[${req.method}] Request for path "${req.path}" at ${new Date().toLocaleString('en-GB')}`);
     next();
 });
 

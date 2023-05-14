@@ -158,3 +158,28 @@
     background-color: $strava-light-orange;
     color: $white;
 }
+
+
+// form errors
+.form__error {
+    border: 3px solid red;
+    animation: shakeTheBox 0.25s;
+
+    &:focus {
+        border: 3px solid red;
+    }
+}
+
+@keyframes shakeTheBox {
+    0% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}

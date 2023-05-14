@@ -191,7 +191,6 @@ const eventComments = (req, res) => {
 
 // POST Requests
 const addEvent = (req, res) => {
-    console.log(req.body);
 
     if (
         isEmpty(req.body.event_time) ||
@@ -336,7 +335,6 @@ const addComment = (req, res) => {
 const updateEvent = (req, res) => {
 
     // Check if any required fields are missing
-    console.log("request body", req.body);
     if (
         isEmpty(req.body.event_time) ||
         isEmpty(req.body.start_location) ||
@@ -381,7 +379,6 @@ const updateEvent = (req, res) => {
             .where({ id: req.params.id })
             .then(data => {
                 res.status(201).send(updateObj);
-                console.log("updateObj",updateObj);
         })
             .catch(err => res.status(400).send(`Error editing event ${req.params.id} ${err}`));
 };

@@ -163,5 +163,20 @@ module.exports = [
         fav_activity_2: "Downhill Skiing",
         fav_activity_3: "Nordic Skiing",
         bio: "Obstacle course racer, ultra and mountain runner."
+    },
+    {
+        id: "a78b7a65-9098-46ab-a4cc-15f92fe7519f",
+        first_name: "Aleks",
+        last_name: "Sagan",
+        avatar_url: "https://dgalywyr863hv.cloudfront.net/pictures/athletes/61951499/15703288/1/large.jpg",
+        city: "Squamish",
+        state: "BC",
+        country: "Canada",
+        strava_id: 61951499,
+        strava_url: "https://www.strava.com/athletes/61951499",
+        fav_activity_1: "Running",
+        fav_activity_2: "Downhill Skiing",
+        fav_activity_3: "Hiking",
+        bio: "I want to make friends so join me ... please!"
     }
 ]

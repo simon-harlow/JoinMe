@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import axios from 'axios'
 
 import './App.scss';
@@ -29,6 +30,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ToastContainer position="bottom-right" hideProgressBar/>
         <Menu userData={userData} />
           <Routes>
             <Route path="/" element={<Navigate to="/login" />} />

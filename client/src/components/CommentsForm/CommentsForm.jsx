@@ -19,7 +19,7 @@ export default function CommentsForm({ userData, eventData, addComment }) {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		if (comment.trim() === "") {
-			setFormError("Please enter a comment.");
+			setFormError({ inputName: "comment", message: "Please enter a comment" });
 			return;
 		}
 		axios.post(
@@ -49,7 +49,7 @@ export default function CommentsForm({ userData, eventData, addComment }) {
 			<form
 				className="comments__form" id="comments-form" onSubmit={handleSubmit}>
 				<textarea
-					className="comments__form-input"
+					className={`comments__form-input ${formError && formError.inputName === "comment" ? "form__error" : ""}`}
 					name="comment"
 					id="comment"
 					maxLength="200"
@@ -57,7 +57,6 @@ export default function CommentsForm({ userData, eventData, addComment }) {
 					onChange={handleChangeComment}
 					value={comment}
 				></textarea>
-				<div className="comments__form-error">{formError}</div>
 				<Button text="Add Comment"/>
 			</form>
 		</div>

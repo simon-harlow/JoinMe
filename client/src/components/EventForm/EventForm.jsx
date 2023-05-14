@@ -3,11 +3,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import DateTimePicker from 'react-datetime-picker';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { API_URL} from "../Utils/const";
 import Activities from '../Utils/activities';
 import Button from "../Button/Button";
 
+import "react-toastify/dist/ReactToastify.css";
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import "./EventForm.scss";
@@ -19,7 +21,7 @@ function EventForm() {
 
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
-	const [event_time, setEventTime] = useState("");
+	const [event_time, setEventTime] = useState(Date.now());
 	const [activity_type, setActivityType] = useState("");
 	const [start_location, setStartLocation] = useState("");
 	const [start_lat, setStartLat] = useState("")
@@ -32,11 +34,10 @@ function EventForm() {
 	const [intensity_level, setIntensityLevel] = useState("");
 	const [gpx_url, setGpxUrl] = useState("");
 
-	const [formErrors, setFormErrors] = useState();
+	const [formError, setFormError] = useState([]);
 
 	const navigate = useNavigate();
 	const formRedirect = () => navigate(`/events`);
-	const backPage = () => navigate(`/events/${eventId}`);
 
 	useEffect(() => {
 		// Only get data if isEdit is true
@@ -83,45 +84,60 @@ function EventForm() {
 		setEndLon(latLng.lng);
 	};
 
-	const isFormValid = () => {
+	const checkInputs = () => {
 		const errors = [];
 
-		if (!title.trim()) {
-			errors.push("Title is required");
+		if (title.trim() === "") {
+			errors.push({ inputName: "title", message: "Please add a title" });
 		}
-		if (!description.trim()) {
-			errors.push("Description is required");
+		if (description.trim() === "") {
+			errors.push({inputName: "description", message: "Please add a description",});
 		}
-		if (!activity_type.trim()) {
-			errors.push("Activity Type is required");
+		if (activity_type === "") {
+			errors.push({inputName: "activity_type", message: "Please choose an activity",});
 		}
-		if (!event_time) {
-			errors.push("Date & Time is required");
+		if (event_time === "") {
+			errors.push({inputName: "event_time", message: "Please choose a date and time",});
 		}
-		if (!start_location.trim()) {
-			errors.push("Start Location is required");
+		if (start_location.trim() === "") {
+			errors.push({inputName: "start_location", message: "Please add a start location",});
 		}
-		if (!end_location.trim()) {
-			errors.push("End Location is required");
+		if (end_location.trim() === "") {
+			errors.push({inputName: "end_location", message: "Please add a end location",});
 		}
-		if (!event_duration.trim()) {
-			errors.push("Duration is required");
+		if (event_duration.trim() === "") {
+			errors.push({inputName: "event_duration", message: "Please add a time duration",});
 		}
-		if (!event_distance) {
-			errors.push("Distance is required");
+		if (event_distance === "") {
+			errors.push({ inputName: "event_distance", message: "Please add a distance in KMs" });
+			} else if (isNaN(event_distance)) {
+			errors.push({ inputName: "event_distance", message: "Distance must be a number" });
+			}
+		if (intensity_level === "") {
+			errors.push({inputName: "intensity_level", message: "Please choose intensity",});
 		}
-		if (!intensity_level.trim()) {
-			errors.push("Intensity Level is required");
+
+		if (errors.length > 0) {
+			setFormError(errors);
+			return false;
+		} else {
+			setFormError([]);
+			return true;
 		}
-		return errors;
 	};
+
+	const isFormValid = () => {
+        if (!checkInputs()) {
+            return false;
+        }
+        return true;
+    }
 
 	// handler for adding new warehouse
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
-		const errors = isFormValid();
 	
-		if (errors.length === 0) {
+		if (isFormValid()) {
 			const data = new FormData();
 			data.append("title", title);
 			data.append("description", description);
@@ -148,7 +164,7 @@ function EventForm() {
 
 			axios[method](url, data)
 				.then(() => {
-					setFormErrors([]);
+					setFormError([]);
 					setTitle("");
 					setDescription("");
 					setActivityType("");
@@ -164,15 +180,17 @@ function EventForm() {
 					setIntensityLevel("");
 					setGpxUrl("");
 					formRedirect();
+					if (isEdit) {
+						toast.success("Update successful!", {theme: "colored"});
+					} else {
+						toast.success("Event Created successfully!", {theme: "colored"});
+					}
 				})
 				.catch((error) => {
 					console.error(error);
 				});
-		} else {
-			setFormErrors(errors);
 		}
 	};
-
 
 	return (
 		<main className="event-form">
@@ -187,7 +205,11 @@ function EventForm() {
 						<div className="event-form__form-left">
 						<label className="event-form__form-label" htmlFor="title">Title:</label>
 						<input
-							className="event-form__form-input"
+							className={`event-form__form-input
+							${formError && formError.find((error) => error.inputName === "title")
+								? "form__error"
+								: ""
+							}`}
 							type="text"
 							id="title"
 							name="title"
@@ -200,7 +222,11 @@ function EventForm() {
 
 						<label className="event-form__form-label" htmlFor="description">Description:</label>
 						<textarea
-							className="event-form__form-input event-form__form-input--textarea"
+							className={`event-form__form-input event-form__form-input--textarea
+							${formError && formError.find((error) => error.inputName === "description")
+								? "form__error"
+								: ""
+							}`}
 							id="description"
 							name="description"
 							maxLength="200"
@@ -211,7 +237,11 @@ function EventForm() {
 
 						<label className="event-form__form-label" htmlFor="activity_type">Activity Type:</label>
 						<select
-						className="event-form__form-select"
+						className={`event-form__form-select
+						${formError && formError.find((error) => error.inputName === "activity_type")
+							? "form__error"
+							: ""
+						}`}
 						id="activity_type"
 						name="activity_type"
 						value={activity_type}
@@ -265,7 +295,7 @@ function EventForm() {
 								<input 
 									{...getInputProps({
 									placeholder: "Start typing and pick a location from the list...",
-									className: "event-form__form-input",
+									className: `event-form__form-input ${formError && formError.find(error => error.inputName === "start_location") ? "form__error" : ""}`,
 									})}
 								/>
 								<div className="autocomplete-dropdown-container" >
@@ -306,7 +336,7 @@ function EventForm() {
 								<input 
 									{...getInputProps({
 									placeholder: "Start typing and pick a location from the list...",
-									className: "event-form__form-input",
+									className: `event-form__form-input ${formError && formError.find(error => error.inputName === "end_location") ? "form__error" : ""}`,
 									})}
 								/>
 								<div className="autocomplete-dropdown-container" >
@@ -336,7 +366,11 @@ function EventForm() {
 
 						<label className="event-form__form-label" htmlFor="event_duration">Duration:</label>
 						<input
-							className="event-form__form-input"
+							className={`event-form__form-input
+							${formError && formError.find((error) => error.inputName === "event_duration")
+								? "form__error"
+								: ""
+							}`}
 							type="text"
 							id="event_duration"
 							name="event_duration"
@@ -348,7 +382,11 @@ function EventForm() {
 
 						<label className="event-form__form-label" htmlFor="event_distance">Distance (KM):</label>
 						<input
-							className="event-form__form-input"
+							className={`event-form__form-input
+							${formError && formError.find((error) => error.inputName === "event_distance")
+								? "form__error"
+								: ""
+							}`}
 							type="text"
 							id="event_distance"
 							name="event_distance"
@@ -360,7 +398,11 @@ function EventForm() {
 
 						<label className="event-form__form-label" htmlFor="intensity_level">Intensity Level:</label>
 						<select
-							className="event-form__form-select"
+							className={`event-form__form-select
+							${formError && formError.find((error) => error.inputName === "intensity_level")
+								? "form__error"
+								: ""
+							}`}
 							id="intensity_level"
 							name="intensity_level"
 							value={intensity_level}
@@ -378,7 +420,7 @@ function EventForm() {
 						</div>
 					</div>
 					<div className="event-form__form-buttons">
-						<Button text="Cancel" textColor="#000000" bgColor="#eeeeee" onClick={backPage}/>
+						<Button text="Cancel" textColor="#000000" bgColor="#eeeeee" onClick={formRedirect}/>
 						<Button type="submit" text={isEdit ? "Update Event" : "Create Event"} onSubmit={handleFormSubmit}/>
 					</div>
 				</form>

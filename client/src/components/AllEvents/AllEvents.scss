@@ -20,9 +20,7 @@
     }
 
     &__banner-header {
-        // border-bottom: 2px solid $grey;
         width: 100%;
-        padding-bottom: 1rem;
 
         &-title {
             @include font-header;

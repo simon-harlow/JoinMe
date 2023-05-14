@@ -43,9 +43,7 @@ function GpxMap( {event} ) {
 			});
 	}, []);
 
-    console.log("gpxData",gpxData)
     const positions = gpxData && gpxData.map(p => [p.lat, p.lon]);
-    console.log("positions",positions);
 
     return (
 		<>

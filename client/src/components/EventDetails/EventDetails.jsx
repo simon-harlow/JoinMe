@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from 'axios';
+import { toast } from "react-toastify";
 
 import CommentsForm from '../CommentsForm/CommentsForm';
 import { API_URL } from "../Utils/const";
@@ -11,6 +12,8 @@ import GpxMap from '../GpxMap/GpxMap';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import Button from '../Button/Button';
 import Delete from '../../assets/icons/web/close.svg';
+
+import "react-toastify/dist/ReactToastify.css";
 import './EventDetails.scss'
 
 function EventDetails({ userData }) {
@@ -108,6 +111,7 @@ function EventDetails({ userData }) {
       axios
         .delete(deleteURL)
         .then(() => {
+          toast.success("Leave event successful!", {theme: "colored"});
           axios.get(`${API_URL}/events/${eventId}/users`)
             .then(response => {
               setJoinedUsers(response.data);
@@ -123,6 +127,7 @@ function EventDetails({ userData }) {
       axios
         .post(postURL)
         .then(() => {
+          toast.success("Join event successful!", {theme: "colored"});
           axios.get(`${API_URL}/events/${eventId}/users`)
             .then(response => {
               setJoinedUsers(response.data);
@@ -152,6 +157,7 @@ function EventDetails({ userData }) {
   const handleConfirmDeleteClick = () => {
     axios.delete(`${API_URL}/events/${eventId}`)
       .then(() => {
+        toast.success("Delete successful!", {theme: "colored"});
         navigate('/events');
       })
       .catch((error) => {
@@ -311,9 +317,11 @@ console.log("event data",event)
           <div className="old-comments-container">
             {sortedComments.map((comment) => (
               <div className="old-comments" id={comment.id} key={comment.id}>
-                <div className="old-comments__left-container">
-                    <img className="old-comments__profile-pic" src={comment.avatar_url} alt={comment.first_name} />
-                </div>
+                <Link to={`/users/${comment.user_id}`}>
+                  <div className="old-comments__left-container">
+                      <img className="old-comments__profile-pic" src={comment.avatar_url} alt={comment.first_name} />
+                  </div>
+                </Link>
                 <div className="old-comments__right-container">
                   <div className="old-comments__title-container">
                       <h6 className="old-comments__name">{comment.first_name} {comment.last_name}</h6>
