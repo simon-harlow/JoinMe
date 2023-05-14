@@ -18,5 +18,6 @@
     &-text {
         @include font-body;
         color: inherit;
+        width: fit-content;
     }
 }

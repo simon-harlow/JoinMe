@@ -51,23 +51,3 @@
         }
     }
 }
-
-// provides red border to either comment input box when they fail validation
-.form__error {
-    border: 1px solid #D22D2D;
-    animation: shakeTheBox 0.25s;
-}
-
-@keyframes shakeTheBox {
-    0% {
-        transform: translateX(-10px);
-    }
-
-    50% {
-        transform: translateX(10px);
-    }
-
-    100% {
-        transform: translateX(0);
-    }
-}

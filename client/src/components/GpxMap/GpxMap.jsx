@@ -7,7 +7,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./GpxMap.scss";
 
-// fix for missing default icon
+// fix for missing icon
 import greenIcon from '../../assets/icons/web/marker-icon-green.png';
 import redIcon from '../../assets/icons/web/marker-icon-red.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -54,15 +54,10 @@ function GpxMap( {event} ) {
 				<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 				<Polyline pathOptions={{ fillColor: 'red', color: 'blue' }} positions={positions} />
                 <Marker position={positions[0]} icon={DefaultIcon}>
-                    <Popup>Start position</Popup>
+                    <Popup>{event.start_location}</Popup>
                 </Marker>
-                <Marker position={positions[positions.length-1]} icon={L.icon({
-                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-                    iconSize: [25, 41],
-                    iconAnchor: [12, 41],
-                    popupAnchor: [0, -41]
-                })}>
-                    <Popup>End position</Popup>
+                <Marker position={positions[positions.length-1]} icon={EndIcon}>
+                    <Popup>{event.end_location}</Popup>
                 </Marker>
 			</MapContainer>
 			}

@@ -217,7 +217,7 @@ const addEvent = (req, res) => {
         id: uuid(),
         created_time: Date.now(),
         created_by,
-        // Repeats has been removed from UI form as this is a placeholder for later phase. Hard-Code "no" for now
+        // Repeats has been removed from UI form, this is a placeholder for later phase. Hard-Code "no" for now
         repeats: "No",
         ...req.body
     };
@@ -233,7 +233,6 @@ const addEvent = (req, res) => {
             if (err) {
                 return res.status(400).send(`Error saving gpx file: ${err}`);
             }
-            console.log(`File saved successfully at ${filePath}`);
 
             // update newEvent with gpx_url
             newEvent = {
@@ -249,7 +248,7 @@ const addEvent = (req, res) => {
                 .catch(err => res.status(400).send(`Error creating event ${req.params.id} ${err}`));
         });
     } else {
-        // else request doesn't have gpx file
+        // request doesn't have gpx file
         const eventWithDefaultGpxUrl = { 
             ...newEvent,
             gpx_url: ""
@@ -293,7 +292,6 @@ const addUserToEvent = (req, res) => {
 };
 
 const addComment = (req, res) => {
-    console.log(req.body);
     if (isEmpty(req.body.comment)) {
         return res.status(400).send('One or more fields are invalid');
     }
@@ -336,9 +334,9 @@ const addComment = (req, res) => {
 
 // PUT Requests
 const updateEvent = (req, res) => {
-    console.log(req.body);
 
     // Check if any required fields are missing
+    console.log("request body", req.body);
     if (
         isEmpty(req.body.event_time) ||
         isEmpty(req.body.start_location) ||
@@ -373,57 +371,19 @@ const updateEvent = (req, res) => {
         event_distance: req.body.event_distance,
         intensity_level: req.body.intensity_level,
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        gpx_url: req.body.gpx_url
     };
 
-        // Check if a file was uploaded
-        if (req.file) {
-            const timestamp = Date.now().toString();
-            const filePath = `./public/gpx/${timestamp}.gpx`;
-
-            // Read the contents of the uploaded GPX file
-            const gpxContent = fs.readFileSync(req.file.path);
-
-            // Save GPX file to public/gpx folder
-            fs.writeFile(filePath, gpxContent, (err) => {
-                if (err) {
-                    return res.status(400).send(`Error saving gpx file: ${err}`);
-                }
-                console.log(`File saved successfully at ${filePath}`);
-
-                // Update updateObj with GPX URL
-                updateObj.gpx_url = `${timestamp}`;
-
-                // Update event in database
-                knex('events')
-                    .update(updateObj)
-                    .where({ id: req.params.id })
-                    .then((data) => {
-                        if (data === 0) {
-                            res.status(400).send(`Event item with id ${req.params.id} not found`);
-                        } else {
-                            const updatedEvent = {
-                                id: req.params.id,
-                                gpx_url: updateObj.gpx_url ? `http://localhost:8080/images/${updateObj.gpx_url}` : "",
-                                // Repeats has been removed from UI form as this is a placeholder for later phase. Hard-Code "no" for now
-                                repeats: "No",
-                                ...updateObj
-                            };
-                            res.status(200).send(updatedEvent);
-                        }
-                    })
-                    .catch(err => res.status(400).send(`Error updating Event ${req.params.id} ${err}`));
-            });
-        } else {
-            // Update event in database
-            knex('events')
+    // Update event in database
+        knex('events')
             .update(updateObj)
             .where({ id: req.params.id })
             .then(data => {
                 res.status(201).send(updateObj);
-            })
-            .catch(err => res.status(400).send(`Error creating event ${req.params.id} ${err}`));
-        }
+                console.log("updateObj",updateObj);
+        })
+            .catch(err => res.status(400).send(`Error editing event ${req.params.id} ${err}`));
 };
 
 // DELETE Requests

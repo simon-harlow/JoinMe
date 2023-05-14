@@ -10,9 +10,8 @@ import './AllEvents.scss';
 const AllEvents = () => {
 
   const [events, setEvents] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
-
-  const sortedEvents = events.sort((a, b) => a.event_time - b.event_time);
 
   useEffect(() => {
     axios
@@ -24,6 +23,24 @@ const AllEvents = () => {
         console.log(error);
       });
   }, []);
+
+  // client-side search filter for speed. If in production this would be done server-side with query params etc...
+  const filteredEvents = events.filter(event =>
+    event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.start_location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.end_location.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    new Date(event.event_time).toLocaleString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false }).includes(searchQuery.toLowerCase()) ||
+    event.event_duration.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.event_distance.toString().includes(searchQuery.toLowerCase()) ||
+    event.intensity_level.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    event.last_name.toLowerCase().includes(searchQuery.toLowerCase())
+  ).sort((a, b) => a.event_time - b.event_time);
+
+  const handleSearchInputChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   const handleClickCreateEvent = () => navigate(`/events/new`)
 
@@ -37,23 +54,31 @@ const AllEvents = () => {
         <div className="all-events__banner-header">
           <h1 className="all-events__banner-header-title">Events</h1>
         </div>
-        <form className="all-events__banner-search">
-          <input className="all-events__banner-search-input" type="text" placeholder="Search Events..." />
-          {/* TODO: create search input form and back-end handler */}
-        </form>
-        <div className="all-events__banner-create">
-          <Button onClick={handleClickCreateEvent} text="Create Event" />
+        <div className="all-events__banner-search-create">
+          <form className="all-events__banner-search">
+            <input
+              className="all-events__banner-search-input"
+              type="text"
+              placeholder="Search Events..."
+              value={searchQuery}
+              onChange={handleSearchInputChange}
+            />
+            {/* TODO: create back-end handler for search */}
+          </form>
+          <div className="all-events__banner-create">
+            <Button onClick={handleClickCreateEvent} text="Create Event" />
+          </div>
         </div>
       </header>
       <div className="all-events__event-card">
         <div className="all-events__list">
-            {sortedEvents.map(event => (
-              <EventList
+          {filteredEvents.map((event) => (
+            <EventList
               key={event.id}
               event={event}
               handleClickEvent={handleClickEvent}
-              />
-            ))}
+            />
+          ))}
         </div>
       </div>
     </main>

@@ -138,7 +138,6 @@ function EventForm() {
 			data.append("intensity_level", intensity_level);
 			
 			if (gpx_url && gpx_url !== "") {
-				console.log("gpx_url:", gpx_url);
 				data.append("gpx_url", gpx_url);
 			}
 
@@ -147,9 +146,6 @@ function EventForm() {
 				? `${API_URL}/events/${eventId}`
 				: `${API_URL}/events`;
 
-				console.log("gpx_url 2",gpx_url);
-				console.log(data);
-	
 			axios[method](url, data)
 				.then(() => {
 					setFormErrors([]);
@@ -186,7 +182,7 @@ function EventForm() {
 					{isEdit ? 'Edit Event' : 'Create Event'}
 				</h1>
 				</header>
-				<form onSubmit={handleFormSubmit}>
+				<form onSubmit={handleFormSubmit} enctype="multipart/form-data">
 					<div className="event-form__form">
 						<div className="event-form__form-left">
 						<label className="event-form__form-label" htmlFor="title">Title:</label>

@@ -33,7 +33,7 @@ module.exports = [
         end_lon: -123.141667, 
         event_duration: "45 mins",
         event_distance: 10,
-        intensity_level: "Beginner",
+        intensity_level: "Easy",
         gpx_url: "",
         repeats: "Yes",
         title: "Stanley Park Seawall",
