@@ -30,6 +30,7 @@ function EventForm() {
 	const [event_duration, setEventDuration] = useState("");
 	const [event_distance, setEventDistance] = useState("");
 	const [intensity_level, setIntensityLevel] = useState("");
+	const [gpx_url, setGpxUrl] = useState("");
 
 	const [formErrors, setFormErrors] = useState();
 
@@ -56,7 +57,8 @@ function EventForm() {
 					setEndLon(data.end_lon);
 					setEventDistance(data.event_distance);
 					setEventDuration(data.event_duration);
-					setIntensityLevel(data.intensity_level)
+					setIntensityLevel(data.intensity_level);
+					setGpxUrl(data.gpx_url)
 				})
 				.catch((error) => {
 					console.error("Error fetching event data:", error);
@@ -118,29 +120,36 @@ function EventForm() {
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
 		const errors = isFormValid();
-
+	
 		if (errors.length === 0) {
-			const data = {
-				title,
-				description,
-				activity_type,
-				event_time,
-				start_location,
-				start_lat,
-				start_lon,
-				end_location,
-				end_lat,
-				end_lon,
-				event_duration,
-				event_distance,
-				intensity_level,
-			};
+			const data = new FormData();
+			data.append("title", title);
+			data.append("description", description);
+			data.append("activity_type", activity_type);
+			data.append("event_time", event_time);
+			data.append("start_location", start_location);
+			data.append("start_lat", start_lat);
+			data.append("start_lon", start_lon);
+			data.append("end_location", end_location);
+			data.append("end_lat", end_lat);
+			data.append("end_lon", end_lon);
+			data.append("event_duration", event_duration);
+			data.append("event_distance", event_distance);
+			data.append("intensity_level", intensity_level);
+			
+			if (gpx_url && gpx_url !== "") {
+				console.log("gpx_url:", gpx_url);
+				data.append("gpx_url", gpx_url);
+			}
 
 			const method = isEdit ? "put" : "post";
 			const url = isEdit
 				? `${API_URL}/events/${eventId}`
 				: `${API_URL}/events`;
 
+				console.log("gpx_url 2",gpx_url);
+				console.log(data);
+	
 			axios[method](url, data)
 				.then(() => {
 					setFormErrors([]);
@@ -157,6 +166,7 @@ function EventForm() {
 					setEventDuration("");
 					setEventDistance("");
 					setIntensityLevel("");
+					setGpxUrl("");
 					formRedirect();
 				})
 				.catch((error) => {
@@ -172,9 +182,9 @@ function EventForm() {
 		<main className="event-form">
 			<div className="event-form__card">
 				<header className="event-form__header">
-					<h1 className="event-form__header-title">
-						Create Event
-					</h1>
+				<h1 className="event-form__header-title">
+					{isEdit ? 'Edit Event' : 'Create Event'}
+				</h1>
 				</header>
 				<form onSubmit={handleFormSubmit}>
 					<div className="event-form__form">
@@ -233,6 +243,15 @@ function EventForm() {
 						clearIcon={null}
 						disableClock={true}
 						locale={"en-GB"}
+						/>
+
+						<label className="event-form__form-label" htmlFor="gpx_url">GPX File:</label>
+						<input
+						onChange={(event) => setGpxUrl(event.target.files[0])}
+						type="file"
+						name="gpx_url"
+						id="gpx_url"
+						disabled={isEdit ? true : false}
 						/>
 
 						</div>
@@ -318,15 +337,6 @@ function EventForm() {
 								</>
 							)}
 						</PlacesAutocomplete>
-						{/* <input
-							className="event-form__form-input"
-							type="text"
-							id="end_location"
-							name="end_location"
-							maxLength="30"
-							value={end_location}
-							onChange={(event) => setEndLocation(event.target.value)}
-						/> */}
 
 						<label className="event-form__form-label" htmlFor="event_duration">Duration:</label>
 						<input

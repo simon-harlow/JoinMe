@@ -1,5 +1,6 @@
 const { v4: uuid } = require('uuid');
 const knex = require('knex')(require('../knexfile'));
+const fs = require('fs');
 
 // Empty field validation
 const isEmpty = (value) => {
@@ -191,6 +192,7 @@ const eventComments = (req, res) => {
 // POST Requests
 const addEvent = (req, res) => {
     console.log(req.body);
+
     if (
         isEmpty(req.body.event_time) ||
         isEmpty(req.body.start_location) ||
@@ -211,22 +213,54 @@ const addEvent = (req, res) => {
     // Hard-coding my user_id until auth added in phase 2
     const created_by = '4780c8ef-6659-4f56-a6ea-cd0486a39f59';
 
-    const newEvent = {
+    let newEvent = {
         id: uuid(),
         created_time: Date.now(),
         created_by,
-        gpx_url: req.gpx_file ? `http://localhost:8080/images/${req.gpx_url}` : "",
         // Repeats has been removed from UI form as this is a placeholder for later phase. Hard-Code "no" for now
         repeats: "No",
         ...req.body
     };
 
-    knex('events')
-        .insert(newEvent)
-        .then(data => {
-            res.status(201).send(newEvent);
-        })
-        .catch(err => res.status(400).send(`Error creating event ${req.params.id} ${err}`));
+    // If request contains gpx file
+    if (req.file) {
+        const timestamp = Date.now().toString();
+        const filePath = `./public/gpx/${timestamp}.gpx`;
+        const gpxContent = fs.readFileSync(req.file.path);
+
+        // Save gpx file to folder
+        fs.writeFile(filePath, gpxContent, err => {
+            if (err) {
+                return res.status(400).send(`Error saving gpx file: ${err}`);
+            }
+            console.log(`File saved successfully at ${filePath}`);
+
+            // update newEvent with gpx_url
+            newEvent = {
+                ...newEvent,
+                gpx_url: `${timestamp}`,
+            };
+
+            knex('events')
+                .insert(newEvent)
+                .then(data => {
+                    res.status(201).send(newEvent);
+                })
+                .catch(err => res.status(400).send(`Error creating event ${req.params.id} ${err}`));
+        });
+    } else {
+        // else request doesn't have gpx file
+        const eventWithDefaultGpxUrl = { 
+            ...newEvent,
+            gpx_url: ""
+        };
+        knex('events')
+            .insert(eventWithDefaultGpxUrl)
+            .then(data => {
+                res.status(201).send(eventWithDefaultGpxUrl);
+            })
+            .catch(err => res.status(400).send(`Error creating event ${req.params.id} ${err}`));
+    }
 };
 
 const addUserToEvent = (req, res) => {
@@ -303,6 +337,8 @@ const addComment = (req, res) => {
 // PUT Requests
 const updateEvent = (req, res) => {
     console.log(req.body);
+
+    // Check if any required fields are missing
     if (
         isEmpty(req.body.event_time) ||
         isEmpty(req.body.start_location) ||
@@ -323,24 +359,71 @@ const updateEvent = (req, res) => {
     // Hard-coding my user_id until auth added in phase 2
     const created_by = '4780c8ef-6659-4f56-a6ea-cd0486a39f59';
 
-    return knex('events')
-        .update(req.body)
-        .where({ id: req.params.id })
-        .then(data => {
-            if (data === 0) {
-                res.status(400).send(`Event item with id ${req.params.id} not found`);
-            } else {
-                const updatedEvent = {
-                    id: req.params.id,
-                    gpx_url: req.gpx_file ? `http://localhost:8080/images/${req.gpx_url}` : "",
-                    // Repeats has been removed from UI form as this is a placeholder for later phase. Hard-Code "no" for now
-                    repeats: "No",
-                    ...req.body
-                };
-                res.status(200).send(updatedEvent)
-            }
-        })
-        .catch(err => res.status(400).send(`Error updating Event ${req.params.id} ${err}`));
+    // Define the update object
+    const updateObj = {
+        event_time: req.body.event_time,
+        created_by,
+        start_location: req.body.start_location,
+        start_lat: req.body.start_lat,
+        start_lon: req.body.start_lon,
+        end_location: req.body.end_location,
+        end_lat: req.body.end_lat,
+        end_lon: req.body.end_lon,
+        event_duration: req.body.event_duration,
+        event_distance: req.body.event_distance,
+        intensity_level: req.body.intensity_level,
+        title: req.body.title,
+        description: req.body.description
+    };
+
+        // Check if a file was uploaded
+        if (req.file) {
+            const timestamp = Date.now().toString();
+            const filePath = `./public/gpx/${timestamp}.gpx`;
+
+            // Read the contents of the uploaded GPX file
+            const gpxContent = fs.readFileSync(req.file.path);
+
+            // Save GPX file to public/gpx folder
+            fs.writeFile(filePath, gpxContent, (err) => {
+                if (err) {
+                    return res.status(400).send(`Error saving gpx file: ${err}`);
+                }
+                console.log(`File saved successfully at ${filePath}`);
+
+                // Update updateObj with GPX URL
+                updateObj.gpx_url = `${timestamp}`;
+
+                // Update event in database
+                knex('events')
+                    .update(updateObj)
+                    .where({ id: req.params.id })
+                    .then((data) => {
+                        if (data === 0) {
+                            res.status(400).send(`Event item with id ${req.params.id} not found`);
+                        } else {
+                            const updatedEvent = {
+                                id: req.params.id,
+                                gpx_url: updateObj.gpx_url ? `http://localhost:8080/images/${updateObj.gpx_url}` : "",
+                                // Repeats has been removed from UI form as this is a placeholder for later phase. Hard-Code "no" for now
+                                repeats: "No",
+                                ...updateObj
+                            };
+                            res.status(200).send(updatedEvent);
+                        }
+                    })
+                    .catch(err => res.status(400).send(`Error updating Event ${req.params.id} ${err}`));
+            });
+        } else {
+            // Update event in database
+            knex('events')
+            .update(updateObj)
+            .where({ id: req.params.id })
+            .then(data => {
+                res.status(201).send(updateObj);
+            })
+            .catch(err => res.status(400).send(`Error creating event ${req.params.id} ${err}`));
+        }
 };
 
 // DELETE Requests

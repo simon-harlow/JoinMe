@@ -12,7 +12,6 @@ import EventDetails from './components/EventDetails/EventDetails';
 import Profile from './components/Profile/Profile';
 import Login from './pages/Login/Login';
 import NotFound from './pages/NotFound/NotFound';
-import GpxMap from './components/GpxMap/GpxMap';
 
 function App() {
   const [userData, setUserData] = useState(null);
@@ -38,7 +37,6 @@ function App() {
             )}
             <Route path="/login" element={<Login userData={userData} />} />
             <Route path="/events" element={<AllEvents userData={userData}/>} />
-            <Route path="/gpx" element={<GpxMap/>} />
             <Route path="/events/new" element={<EventForm userData={userData}/>} />
             <Route path="/events/edit/:eventId" element={<EventForm userData={userData}/>} />
             <Route path="/events/:eventId" element={<EventDetails userData={userData}/>} />

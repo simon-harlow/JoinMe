@@ -2,18 +2,21 @@ const express = require("express");
 const router = express.Router();
 const fs = require('fs');
 const GPXParser = require('gpxparser');
+const multer = require("multer");
 const eventsController = require('../controllers/eventsController')
+const gpxUpload = multer({ dest: "public/gpx/" });
 
+router.use(express.json());
 
 router
     .route('/')
     .get(eventsController.allEvents)
-    .post(eventsController.addEvent);
+    .post(gpxUpload.single('gpx_url'), eventsController.addEvent);
 
 router
     .route('/:id')
     .get(eventsController.singleEvent)
-    .put(eventsController.updateEvent)
+    .put(gpxUpload.single('gpx_url'), eventsController.updateEvent)
     .delete(eventsController.deleteEvent);
 
 router
