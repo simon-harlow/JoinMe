@@ -44,11 +44,12 @@ function GpxMap( {event} ) {
 	}, []);
 
     const positions = gpxData && gpxData.map(p => [p.lat, p.lon]);
+    const bounds = L.latLngBounds(positions);
 
     return (
 		<>
 			{positions.length > 0 &&
-			<MapContainer className="gpx_map" center={positions[0]} zoom={11}>
+			<MapContainer className="gpx_map" bounds={bounds}>
 				<TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 				<Polyline pathOptions={{ fillColor: 'red', color: 'blue' }} positions={positions} />
                 <Marker position={positions[0]} icon={DefaultIcon}>

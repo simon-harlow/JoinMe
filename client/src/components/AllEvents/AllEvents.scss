@@ -37,7 +37,7 @@
     }
 
     &__banner-search {
-        width: 80%;
+        width: 85%;
     }
 
     &__banner-search-input {
@@ -48,7 +48,8 @@
         width: 100%;
 
         &:focus,
-        &:active {
+        &:active,
+        &:hover {
             outline: none;
             border: 2px solid $strava-orange;
         }

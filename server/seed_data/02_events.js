@@ -14,7 +14,7 @@ module.exports = [
         event_duration: "30 mins",
         event_distance: 8,
         intensity_level: "Moderate",
-        gpx_url: "",
+        gpx_url: "qe-park-to-ov",
         repeats: "No",
         title: "Run from QE Park to Olympic Village",
         description: "Going to run from QE park to Olympic Village, keeping a pace of around 7:30 min miles"
@@ -34,7 +34,7 @@ module.exports = [
         event_duration: "45 mins",
         event_distance: 10,
         intensity_level: "Easy",
-        gpx_url: "",
+        gpx_url: "stanley-park-seawall",
         repeats: "Yes",
         title: "Stanley Park Seawall",
         description: "Every Wednesday I do a lap around Stanley Park at a slow pace, come and join me ... we can get donuts after!!"
@@ -57,13 +57,13 @@ module.exports = [
         gpx_url: "",
         repeats: "No",
         title: "Vancouver to Whistler Gran Fondo Training Ride",
-        description: "Im going to do a fast paced practice for the Gran Fondo if anyone wants to join and get a peloton going. It will be fast paced. I'm going for the win this year!"
+        description: "Im going to do a fast paced practice for the Gran Fondo if anyone wants to join and get a peloton going. I'm going for the win this year!"
     },
     {
         id: "8fca2ee0-6db5-4b96-8e53-699c448aaf20",
         created_by: "a28128b6-451a-4fa0-bf88-4a85348f3915",
         created_time: 1683223200000,
-        event_time: 1685869200000,
+        event_time: 1685466000000,
         activity_type: "Downhill Ski",
         start_location: "Cypress",
         start_lat: 49.395793, 
@@ -83,7 +83,7 @@ module.exports = [
         id: "f8af3412-02a4-4cd1-abbe-9d86a725b794",
         created_by: "a28128b6-451a-4fa0-bf88-4a85348f3915",
         created_time: 1683223200000,
-        event_time: 1685350800000,
+        event_time: 1685379600000,
         activity_type: "Hike",
         start_location: "Grouse Mountain",
         start_lat: 49.386098, 
@@ -103,7 +103,7 @@ module.exports = [
         id: "cd43651e-e528-4c78-b95e-01bdd20772a4",
         created_by: "4780c8ef-6659-4f56-a6ea-cd0486a39f59",
         created_time: 1683828000000,
-        event_time: 1684911600000,
+        event_time: 1684940400000,
         activity_type: "Run",
         start_location: "Canadian Tire, Squamish",
         start_lat: 49.735691, 
@@ -117,6 +117,6 @@ module.exports = [
         gpx_url: "",
         repeats: "No",
         title: "37 Mile Run for My 37th Birthday",
-        description: "Im going to be running 37 miles (~60K) for my 37th Birthday, would love it if people could join for all or any part of it. We will get Ice Cream at the end"
+        description: "Im going to be running 37 miles (~60K) for my 37th Birthday, would love it if people could join for all or any part of it."
     },
 ]
