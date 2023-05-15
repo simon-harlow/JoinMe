@@ -3,37 +3,45 @@
 **Contens**
 - [JoinMe](#joinme)
   - [📝 Description](#-description)
-  - [🎓 Author](#-author)
-  - [🧰 Tech Stack \& Notable Dependencies](#-tech-stack--notable-dependencies)
+  - [⭐ Features](#-features)
+  - [🧰 Tech Stack](#-tech-stack)
       - [Client Side](#client-side)
       - [Server Side](#server-side)
   - [📜 API Documentation](#-api-documentation)
+  - [🖼️ Screenshots \& GIFs](#️-screenshots--gifs)
+      - [Login screen](#login-screen)
+      - [My Profile](#my-profile)
+      - [Events](#events)
+      - [Create Event (no GPX Upload)](#create-event-no-gpx-upload)
+      - [Create Event (with GPX Upload)](#create-event-with-gpx-upload)
+      - [Join Event \& Comment](#join-event--comment)
+      - [Events Others Have Joined](#events-others-have-joined)
+  - [🙏 Acknowledgements](#-acknowledgements)
   - [📦 Local Setup](#-local-setup)
       - [.env](#env)
       - [MySQL DB \& Data](#mysql-db--data)
-  - [🖼️ Screenshots \& GIFs](#️-screenshots--gifs)
 
 
 ## 📝 Description
 For my BrainStation Capstone Project, I created JoinMe, a unique social platform that allows users to connect with others who share their passion for sports and the outdoors.
 
-JoinMe is designed to be an add-on for Strava to allow users to post future activities that they wise other users to join. Users can 'Join' an Event, post comments, view information about the event including an embedded map that will display a GPX route of the activity if uploaded by the user.
+JoinMe is a Strava add-on that allows users to post upcoming events that others can discover and join. Users can participate in events, leave comments, and access event details, including an embedded map that displays the GPX route if uploaded by the organizer.
 
-## 🎓 Author
+## ⭐ Features
 
-[Simon Harlow](https://github.com/simon-harlow)
+* Search for events by virtually any metric
+* See gpx route of event on interactive map
+* Join and comment on events posted by other users
+* See what events friends have joined
 
-## 🧰 Tech Stack & Notable Dependencies
+## 🧰 Tech Stack
 
 #### Client Side
 
 * React.js
 * SAAS
-* Google-Maps API *(for places auto-complete)*
+* Google-Maps API *(for places auto-complete on event form)*
 * Leaflet *(map rendering and GPX route display)*
-* Toastify
-
-*I opted not to use a css library such as Chakra UI or Tailwind CSS as I wanted the challenge of creating the modals, buttons etc... myself. I felt this gave me more flexibility to create what I envisaged*
 
 #### Server Side
 
@@ -46,6 +54,45 @@ JoinMe is designed to be an add-on for Strava to allow users to post future acti
 
 [All of the API's used in the project can be found here](https://documenter.getpostman.com/view/24908455/2s93eePonf)
 
+## 🖼️ Screenshots & GIFs
+
+#### Login screen
+![Login](./screenshots-gifs/login.PNG)
+
+#### My Profile
+![My Profile](./screenshots-gifs/logged-in-user-profile.gif)
+
+#### Events
+![Events](./screenshots-gifs/events-with-search.gif)
+
+#### Create Event (no GPX Upload)
+![Create Event No GPX](./screenshots-gifs/create-event-no-gpx-upload.gif)
+
+#### Create Event (with GPX Upload)
+![Create Event With GPX](./screenshots-gifs/create-event-with-gpx-upload.gif)
+
+#### Join Event & Comment
+![Join Event](./screenshots-gifs/event-join-and-comment.gif)
+
+#### Events Others Have Joined
+![Other Users Joined Events](./screenshots-gifs/events-others-have-joined-or-organizing.gif)
+
+## 🙏 Acknowledgements
+
+I would like to thank all the teachers and TA's for helping me during this bootcamp.
+
+* [Adam Ginther](https://github.com/GInTher)
+* [Paolo Riberio](https://github.com/PCRib)
+* [Rajat Bansal](https://github.com/rjtbansal)
+* [Roisin O'Neill](https://github.com/RoisOneill)
+* [Jason Yang](https://github.com/projectyang)
+
+Any feedback on JoinMe is welcomed as its my first true solo development project.
+
+Lets connect on [LinkedIn](https://www.linkedin.com/in/simon-harlow/)
+
+
+#############################################################
 
 ## 📦 Local Setup
 
@@ -82,8 +129,3 @@ Run the migrations and then insert seed data by running these commands from with
 npm run migrate
 npm run seed
 ```
-
-## 🖼️ Screenshots & GIFs
-
-
-
