@@ -201,6 +201,7 @@ const addEvent = (req, res) => {
         isEmpty(req.body.end_lat) ||
         isEmpty(req.body.end_lon) ||
         isEmpty(req.body.event_duration) ||
+        isEmpty(req.body.activity_type) ||
         isEmpty(req.body.event_distance) ||
         isEmpty(req.body.intensity_level) ||
         isEmpty(req.body.title) ||
@@ -223,32 +224,27 @@ const addEvent = (req, res) => {
 
     // If request contains gpx file
     if (req.file) {
-        const timestamp = Date.now().toString();
-        const filePath = `./public/gpx/${timestamp}.gpx`;
-        const gpxContent = fs.readFileSync(req.file.path);
+        const gpxFileName = req.file.filename;
+        const gpxUrl = gpxFileName;
 
-        // Save gpx file to folder
-        fs.writeFile(filePath, gpxContent, err => {
-            if (err) {
-                return res.status(400).send(`Error saving gpx file: ${err}`);
-            }
+        // rename the multer file so it has gpx extension
+        fs.renameSync(`public/gpx/${gpxFileName}`, `public/gpx/${gpxFileName}.gpx`);
 
-            // update newEvent with gpx_url
-            newEvent = {
-                ...newEvent,
-                gpx_url: `${timestamp}`,
-            };
+        // Update newEvent with gpx_url
+        newEvent = {
+            ...newEvent,
+            gpx_url: gpxUrl,
+        };
 
-            knex('events')
-                .insert(newEvent)
-                .then(data => {
-                    res.status(201).send(newEvent);
-                })
-                .catch(err => res.status(400).send(`Error creating event ${req.params.id} ${err}`));
-        });
+        knex('events')
+            .insert(newEvent)
+            .then(data => {
+                res.status(201).send(newEvent);
+            })
+            .catch(err => res.status(400).send(`Error creating event ${req.params.id} ${err}`));
     } else {
         // request doesn't have gpx file
-        const eventWithDefaultGpxUrl = { 
+        const eventWithDefaultGpxUrl = {
             ...newEvent,
             gpx_url: ""
         };
@@ -344,6 +340,7 @@ const updateEvent = (req, res) => {
         isEmpty(req.body.end_lat) ||
         isEmpty(req.body.end_lon) ||
         isEmpty(req.body.event_duration) ||
+        isEmpty(req.body.activity_type) ||
         isEmpty(req.body.event_distance) ||
         isEmpty(req.body.intensity_level) ||
         isEmpty(req.body.title) ||
@@ -355,7 +352,6 @@ const updateEvent = (req, res) => {
     // Hard-coding my user_id until auth added in phase 2
     const created_by = '4780c8ef-6659-4f56-a6ea-cd0486a39f59';
 
-    // Define the update object
     const updateObj = {
         event_time: req.body.event_time,
         created_by,
@@ -366,6 +362,7 @@ const updateEvent = (req, res) => {
         end_lat: req.body.end_lat,
         end_lon: req.body.end_lon,
         event_duration: req.body.event_duration,
+        activity_type: req.body.activity_type,
         event_distance: req.body.event_distance,
         intensity_level: req.body.intensity_level,
         title: req.body.title,
