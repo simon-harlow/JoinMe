@@ -273,6 +273,7 @@ function EventForm() {
 
 						<label className="event-form__form-label" htmlFor="gpx_url">GPX File:</label>
 						<input
+						className="event-form__form-label event-form__form-label--file-button"
 						onChange={(event) => setGpxUrl(event.target.files[0])}
 						type="file"
 						name="gpx_url"

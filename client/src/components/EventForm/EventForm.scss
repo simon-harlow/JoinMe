@@ -63,6 +63,10 @@
             @include font-label;
             color: $strava-orange;
             padding-bottom: 0.5rem;
+
+            &--file-button {
+                @include font-body;
+            }
         }
 
         &-input,

@@ -37,7 +37,6 @@ function EventDetails({ userData }) {
       .get(`${API_URL}/events/${eventId}`)
       .then(response => {
         setEvent(response.data);
-        console.log(response.data);
         if (userData && response.data.created_by === userData.id) {
           setLoggedInUserEvent(true);
           setEventUserData(userData);
@@ -165,8 +164,6 @@ function EventDetails({ userData }) {
       });
     setShowModal(false);
   };
-
-console.log("event data",event)
 
   // HTML Return
   return (
