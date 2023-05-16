@@ -76,7 +76,7 @@ function EventForm() {
 		}
 	}, [isEdit, eventId]);
 
-
+	// handle start and end location address and co-ordinates for Map
 	const handleStartSelect = async (value) => {
 		const results = await geocodeByAddress(value);
 		const latLng = await getLatLng(results[0]);
@@ -93,6 +93,7 @@ function EventForm() {
 		setEndLon(latLng.lng);
 	};
 
+	// form validation - add error message to interface in future version
 	const checkInputs = () => {
 		const errors = [];
 
@@ -142,7 +143,7 @@ function EventForm() {
         return true;
     }
 
-	// handler for adding new warehouse
+	// handler for adding new event
 	const handleFormSubmit = (event) => {
 		event.preventDefault();
 	

@@ -63,7 +63,6 @@ const AllEvents = () => {
               value={searchQuery}
               onChange={handleSearchInputChange}
             />
-            {/* TODO: create back-end handler for search */}
           </form>
           <div className="all-events__banner-create">
             <Button onClick={handleClickCreateEvent} text="Create Event" />

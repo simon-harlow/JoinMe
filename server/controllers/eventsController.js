@@ -330,7 +330,6 @@ const addComment = (req, res) => {
 // PUT Requests
 const updateEvent = (req, res) => {
 
-    // Check if any required fields are missing
     if (
         isEmpty(req.body.event_time) ||
         isEmpty(req.body.start_location) ||
