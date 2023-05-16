@@ -14,16 +14,18 @@ const Menu = ({ userData }) => {
 		<nav className="menu-container">
 			<div className="menu">
 				<header className="menu__header">
-					<img
-						className="menu__header-run"
-						src={Run}
-						alt="joinme logo running man"
-					/>
-					<img
-						className="menu__header-logo"
-						src={JoinMeWhite}
-						alt="joinme logo text"
-					/>
+					<NavLink to={`/users/${userData?.id}`}>
+						<img
+							className="menu__header-run"
+							src={Run}
+							alt="joinme logo running man"
+						/>
+						<img
+							className="menu__header-logo"
+							src={JoinMeWhite}
+							alt="joinme logo text"
+						/>
+					</NavLink>
 				</header>
 				<div className="menu__links">
 					<NavLink to="/events" className="menu__link" >

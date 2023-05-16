@@ -38,6 +38,15 @@ function EventForm() {
 
 	const navigate = useNavigate();
 	const formRedirect = () => navigate(`/events`);
+	const backToEvent = () => navigate(`/events/${eventId}`)
+
+	const handleCancelClick = () => {
+		if (isEdit) {
+			backToEvent();
+		} else {
+			formRedirect();
+		}
+	};
 
 	useEffect(() => {
 		// Only get data if isEdit is true
@@ -179,7 +188,11 @@ function EventForm() {
 					setEventDistance("");
 					setIntensityLevel("");
 					setGpxUrl("");
-					formRedirect();
+					if (isEdit) {
+						backToEvent();
+					} else {
+						formRedirect();
+					}
 					if (isEdit) {
 						toast.success("Update successful!", {theme: "colored"});
 					} else {
@@ -421,7 +434,7 @@ function EventForm() {
 						</div>
 					</div>
 					<div className="event-form__form-buttons">
-						<Button text="Cancel" textColor="#000000" bgColor="#eeeeee" onClick={formRedirect}/>
+						<Button text="Cancel" textColor="#000000" bgColor="#eeeeee" onClick={handleCancelClick}/>
 						<Button type="submit" text={isEdit ? "Update Event" : "Create Event"} onSubmit={handleFormSubmit}/>
 					</div>
 				</form>

@@ -26,16 +26,16 @@ const AllEvents = () => {
 
   // client-side search filter for speed. If in production this would be done server-side with query params etc...
   const filteredEvents = events.filter(event =>
-    event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.start_location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.end_location.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    new Date(event.event_time).toLocaleString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false }).includes(searchQuery.toLowerCase()) ||
-    event.event_duration.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.event_distance.toString().includes(searchQuery.toLowerCase()) ||
-    event.intensity_level.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    event.last_name.toLowerCase().includes(searchQuery.toLowerCase())
+    event.title.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+    event.description.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+    event.start_location.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+    event.end_location.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+    new Date(event.event_time).toLocaleString('en-GB', {day: '2-digit', month: '2-digit', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false }).includes(searchQuery.trim().toLowerCase()) ||
+    event.event_duration.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+    event.event_distance.toString().includes(searchQuery.trim().toLowerCase()) ||
+    event.intensity_level.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+    event.first_name.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+    event.last_name.toLowerCase().includes(searchQuery.trim().toLowerCase())
   ).sort((a, b) => a.event_time - b.event_time);
 
   const handleSearchInputChange = (event) => {

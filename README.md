@@ -89,7 +89,7 @@ I would like to thank all the teachers and TA's for helping me during this bootc
 
 Any feedback on JoinMe is welcomed as its my first true solo development project.
 
-Lets connect on [LinkedIn](https://www.linkedin.com/in/simon-harlow/)
+Let's connect on [LinkedIn](https://www.linkedin.com/in/simon-harlow/)
 
 
 #############################################################
