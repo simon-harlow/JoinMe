@@ -11,4 +11,5 @@ const Activities = [
     'Swim',
 ]
 
+ 
 export default Activities;
