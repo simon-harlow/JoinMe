@@ -47,7 +47,8 @@ const Profile = ({ userData }) => {
 			axios
 				.get(`${API_URL}/events/users/${userProfileData.id}`)
 				.then((response) => {
-					setUserCreatedEvents(response.data);
+					const sortedUserEventData = response.data.sort((a, b) => a.event_time - b.event_time);
+					setUserCreatedEvents(sortedUserEventData);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -61,7 +62,8 @@ const Profile = ({ userData }) => {
 			axios
 				.get(`${API_URL}/events/users/${userProfileData.id}/joined`)
 				.then((response) => {
-					setUserJoinedEvents(response.data);
+					const sortedJoinedEventData = response.data.sort((a, b) => a.event_time - b.event_time);
+					setUserJoinedEvents(sortedJoinedEventData);
 				})
 				.catch((error) => {
 					console.log(error);
