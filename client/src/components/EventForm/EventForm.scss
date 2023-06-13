@@ -101,10 +101,6 @@
     }
 }
 
-.event-form__form-select-option:active {
-    background-color: $strava-orange;
-}
-
 // styles for the DateTimePicker component
 .react-datetime-picker {
     @include font-body;
@@ -186,4 +182,8 @@
     100% {
         transform: translateX(0);
     }
+}
+
+select option {
+    background-color: $white;
 }

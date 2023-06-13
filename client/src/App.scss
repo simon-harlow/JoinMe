@@ -42,6 +42,10 @@ body {
   background-color: $grey;
 }
 
+::selection {
+  background: $strava-light-orange
+}
+
 // Fonts
 @font-face {
   font-family: 'Avenir Regular';

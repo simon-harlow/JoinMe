@@ -59,7 +59,7 @@ const AllEvents = () => {
             <input
               className="all-events__banner-search-input"
               type="text"
-              placeholder="Search Events..."
+              placeholder="Search Events by Title, Description, Location, Distance, Date etc..."
               value={searchQuery}
               onChange={handleSearchInputChange}
             />

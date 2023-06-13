@@ -216,6 +216,10 @@
             border-radius: 50%;
             height: 5rem;
             width: 5rem;
+
+            &:hover {
+                transform: scale(0.9);
+            }
         }
 
         &-name {
