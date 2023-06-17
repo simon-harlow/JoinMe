@@ -271,6 +271,10 @@
         border-radius: 50%;
         background-color: $grey;
         object-fit: cover;
+
+        &:hover {
+            transform: scale(0.9);
+        }
     }
 
     &__right-container {

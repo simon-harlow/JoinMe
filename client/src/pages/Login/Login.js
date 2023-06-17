@@ -12,7 +12,7 @@ const Login = ({ userData }) => {
 
     const navigate = useNavigate();
 
-    const handleLogin = () => navigate(`/users/${userData.id}`)
+    const handleLogin = () => navigate(`/welcome`)
 
 
 	return (

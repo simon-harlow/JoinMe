@@ -1,0 +1,89 @@
+@use '../../App.scss' as *;
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 1rem;
+
+    &-header-card {
+        background-color: $white;
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        width: 80rem;
+        margin: 0 auto 0 auto;
+
+        &__title {
+            @include font-header;
+            padding-bottom: 1rem;
+
+            &--span {
+                color: $strava-orange
+            }
+        }
+
+        &__subtitle {
+            @include font-subheader;
+            padding-bottom: 2rem;
+        }
+
+        &__text {
+            @include font-body;
+        }
+    }
+
+}
+
+.card-container {
+    background-color: $white;
+    border-radius: 0.5rem;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
+    width: 80rem;
+    margin: 0 auto 0 auto;
+
+    .card {
+        background-color: $white;
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        width: 200px;
+        height: 250px;
+        margin: 2rem;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+
+        &:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: $strava-grey;
+            cursor: pointer;
+        }
+
+        &__icon {
+            padding-top: 1rem;
+            height: 5rem;
+        }
+
+        &__title {
+            @include font-section-header;
+            text-align: center;
+            color: $strava-orange;
+        }
+
+        &__text {
+            @include font-body;
+        }
+    }
+}

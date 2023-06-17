@@ -14,7 +14,7 @@ const Menu = ({ userData }) => {
 		<nav className="menu-container">
 			<div className="menu">
 				<header className="menu__header">
-					<NavLink to={`/users/${userData?.id}`}>
+					<NavLink to={`/welcome`}>
 						<img
 							className="menu__header-run"
 							src={Run}
