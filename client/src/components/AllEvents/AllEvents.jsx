@@ -5,12 +5,14 @@ import axios from 'axios';
 import { API_URL } from '../Utils/const';
 import Button from '../Button/Button';
 import EventList from '../EventList/EventList';
+import EventsMap from '../EventsMap/EventsMap';
 import './AllEvents.scss';
 
 const AllEvents = () => {
 
   const [events, setEvents] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [viewMode, setViewMode] = useState('list');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const AllEvents = () => {
     event.event_duration.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
     event.event_distance.toString().includes(searchQuery.trim().toLowerCase()) ||
     event.intensity_level.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
+    event.activity_type.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
     event.first_name.toLowerCase().includes(searchQuery.trim().toLowerCase()) ||
     event.last_name.toLowerCase().includes(searchQuery.trim().toLowerCase())
   ).sort((a, b) => a.event_time - b.event_time);
@@ -48,39 +51,63 @@ const AllEvents = () => {
 		navigate(`/events/${eventId}`);
 	};
 
+  const toggleViewMode = () => {
+    setViewMode(viewMode === 'list' ? 'map' : 'list');
+  };
+
   return (
-    <main className="all-events">
-      <header className="all-events__banner-card">
-        <div className="all-events__banner-header">
-          <h1 className="all-events__banner-header-title">Events</h1>
-        </div>
-        <div className="all-events__banner-search-create">
-          <form className="all-events__banner-search">
-            <input
-              className="all-events__banner-search-input"
-              type="text"
-              placeholder="Search Events by Title, Description, Location, Distance, Date etc..."
-              value={searchQuery}
-              onChange={handleSearchInputChange}
+		<main className="all-events">
+			<header className="all-events__banner-card">
+				<div className="all-events__banner-header">
+					<h1 className="all-events__banner-header-title">Events</h1>
+				</div>
+				<div className="all-events__banner-search-create">
+					<form className="all-events__banner-search">
+						<input
+							className="all-events__banner-search-input"
+							type="text"
+							placeholder="Search Events by Title, Description, Location, Distance, Date etc..."
+							value={searchQuery}
+							onChange={handleSearchInputChange}
+						/>
+					</form>
+          <div className="all-events__banner-toggle">
+              <Button
+              onClick={toggleViewMode}
+              text={viewMode === 'list' ? "Toggle Map View" : "Toggle List View"}
+              bgColor="#eeeeee"
+              textColor="#000000"
             />
-          </form>
-          <div className="all-events__banner-create">
-            <Button onClick={handleClickCreateEvent} text="Create Event" />
           </div>
-        </div>
-      </header>
-      <div className="all-events__event-card">
-        <div className="all-events__list">
-          {filteredEvents.map((event) => (
-            <EventList
-              key={event.id}
-              event={event}
-              handleClickEvent={handleClickEvent}
-            />
-          ))}
-        </div>
-      </div>
-    </main>
+					<div className="all-events__banner-create">
+						<Button
+							onClick={handleClickCreateEvent}
+							text="Create Event"
+						/>
+					</div>
+				</div>
+			</header>
+			<div className="all-events__event-card">
+				{viewMode === "list" ? (
+					<div className="all-events__list">
+						{filteredEvents.map((event) => (
+							<EventList
+								key={event.id}
+								event={event}
+								handleClickEvent={handleClickEvent}
+							/>
+						))}
+					</div>
+				) : (
+					<div className="all-events__map">
+						<EventsMap
+							events={filteredEvents}
+							handleClickEvent={handleClickEvent}
+						/>
+					</div>
+				)}
+			</div>
+		</main>
   );
 };
 

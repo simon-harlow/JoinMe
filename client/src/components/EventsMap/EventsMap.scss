@@ -1,0 +1,60 @@
+@use '../../App.scss' as *;
+
+.events-map {
+    height: 500px;
+    width: 100%;
+}
+
+.leaflet-container {
+    border-radius: 0.5rem;
+}
+
+.leaflet-control-attribution {
+    display: none;
+}
+
+.leaflet-popup-content p {
+    margin: 0 0 0 0;
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    cursor: pointer;
+
+    &-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        gap: 1rem;
+
+        &__title {
+            @include font-subheader;
+        }
+    }
+
+    &-desc {
+        @include font-body;
+        padding-bottom: 1rem;
+    }
+
+    &-details {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+
+        &__label {
+            @include font-label;
+            color: $strava-orange;
+        }
+    
+        &__text {
+            @include font-body;
+            margin: 0
+        }
+    }
+}

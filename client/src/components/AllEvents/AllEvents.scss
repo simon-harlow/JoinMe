@@ -37,7 +37,7 @@
     }
 
     &__banner-search {
-        width: 85%;
+        width: 75%;
     }
 
     &__banner-search-input {
@@ -53,6 +53,10 @@
             outline: none;
             border: 2px solid $strava-orange;
         }
+    }
+
+    &__banner-toggle {
+        width: auto;
     }
 
     &__banner-create {
@@ -77,6 +81,15 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    &__map {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        height: 500px;
         width: 100%;
         gap: 1rem;
     }
