@@ -18,7 +18,8 @@
       - [Events Others Have Joined](#events-others-have-joined)
   - [🙏 Acknowledgements](#-acknowledgements)
   - [📦 Local Setup](#-local-setup)
-      - [.env](#env)
+      - [Client Side .env](#client-side-env)
+      - [Server Side .env](#server-side-env)
       - [MySQL DB \& Data](#mysql-db--data)
 
 
@@ -98,7 +99,15 @@ Find me on [LinkedIn](https://www.linkedin.com/in/simon-harlow/)
 
 Steps to setup local environment for the project
 
-#### .env
+#### Client Side .env
+
+A Google Maps API Key is needed to use the places autofill on the event form. Create a .env file with a google api key in the client folder.
+
+```
+REACT_APP_GOOGLE_API_KEY='your api key'
+```
+
+#### Server Side .env
 Copy this file to an .env file in the server folder and replace the values with your own local configuration.
 
 ```

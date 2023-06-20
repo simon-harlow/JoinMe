@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import { useJsApiLoader } from '@react-google-maps/api';
 import axios from 'axios'
 
 import './App.scss';
@@ -17,6 +18,12 @@ import Welcome from './components/Welcome/Welcome';
 
 function App() {
   const [userData, setUserData] = useState(null);
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY,
+    libraries: ["places"]
+  })
 
   useEffect(() => {
     axios
