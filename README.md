@@ -1,6 +1,6 @@
 # JoinMe
 
-**Contens**
+**Contents**
 - [JoinMe](#joinme)
   - [📝 Description](#-description)
   - [⭐ Features](#-features)
