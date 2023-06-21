@@ -6,7 +6,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import { API_URL} from "../Utils/const";
-import Activities from '../Utils/activities';
+import Activities from "../Utils/activities";
 import Button from "../Button/Button";
 
 import "react-toastify/dist/ReactToastify.css";
