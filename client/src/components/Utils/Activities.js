@@ -1,4 +1,4 @@
-const Activities = [
+const activities = [
     'Run',
     'Hike',
     'Bike',
@@ -11,4 +11,4 @@ const Activities = [
     'Swim',
 ]
 
-export default Activities;
+export default activities;
