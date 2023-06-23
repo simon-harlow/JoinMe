@@ -183,3 +183,18 @@
         transform: translateX(0);
     }
 }
+
+// locations auto-complete dropdown
+.autocomplete-dropdown-container {
+    @include font-body;
+}
+
+.suggestion-item--active {
+    padding: 0.2rem 0;
+}
+
+.suggestion-item--active:hover {
+    background-color: $strava-grey;
+    color: $black
+}
+

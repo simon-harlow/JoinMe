@@ -319,14 +319,10 @@ function EventForm() {
 									const className = suggestion.active
 										? "suggestion-item--active"
 										: "suggestion-item";
-									const style = suggestion.active
-										? { backgroundColor: "#f7f7f7", cursor: "pointer" }
-										: { backgroundColor: "transparent", cursor: "pointer" };
 									return (
 										<div
 										{...getSuggestionItemProps(suggestion, {
 											className,
-											style,
 										})}
 										>
 										<span>{suggestion.description}</span>
