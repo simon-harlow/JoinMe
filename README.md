@@ -8,8 +8,9 @@
       - [Client Side](#client-side)
       - [Server Side](#server-side)
   - [📜 API Documentation](#-api-documentation)
+  - [🗨️ Capstone Presentation](#️-capstone-presentation)
   - [🖼️ Screenshots \& GIFs](#️-screenshots--gifs)
-      - [Login screen](#login-screen)
+      - [Login \& Welcome screen](#login--welcome-screen)
       - [My Profile](#my-profile)
       - [Events](#events)
       - [Create Event (no GPX Upload)](#create-event-no-gpx-upload)
@@ -55,16 +56,20 @@ JoinMe is a Strava add-on that allows users to post upcoming events that others 
 
 [All of the API's used in the project can be found here](https://documenter.getpostman.com/view/24908455/2s93eePonf)
 
+## 🗨️ Capstone Presentation
+
+[The presentation slides for my Capstone Presentation can be found here](https://pitch.com/public/abae9f70-b437-46a7-be45-43099ef7fb44)
+
 ## 🖼️ Screenshots & GIFs
 
-#### Login screen
+#### Login & Welcome screen
 ![Login](./screenshots-gifs/login.gif)
 
 #### My Profile
 ![My Profile](./screenshots-gifs/logged-in-user-profile.gif)
 
 #### Events
-![Events](./screenshots-gifs/events-with-search.gif)
+![Events](./screenshots-gifs/events-with-search-and-map.gif)
 
 #### Create Event (no GPX Upload)
 ![Create Event No GPX](./screenshots-gifs/create-event-no-gpx-upload.gif)
