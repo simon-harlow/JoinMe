@@ -58,7 +58,7 @@ JoinMe is a Strava add-on that allows users to post upcoming events that others 
 ## 🖼️ Screenshots & GIFs
 
 #### Login screen
-![Login](./screenshots-gifs/login.PNG)
+![Login](./screenshots-gifs/login.gif)
 
 #### My Profile
 ![My Profile](./screenshots-gifs/logged-in-user-profile.gif)
